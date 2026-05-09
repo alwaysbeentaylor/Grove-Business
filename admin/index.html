@@ -151,9 +151,9 @@
   <div class="login-box">
     <div class="login-mark">Grove</div>
     <div class="login-sub">Admin · Sign in</div>
-    <form id="loginForm">
+    <form id="loginForm" onsubmit="event.preventDefault();return false;">
       <div class="field"><input type="password" id="loginPass" placeholder="Password" autofocus required /></div>
-      <button class="btn btn-gold btn-block" type="submit">Enter</button>
+      <button class="btn btn-gold btn-block" type="button" id="loginSubmit">Enter</button>
       <p class="hint" style="margin-top:18px;text-align:center">Default password: <code>grove2026</code> — change it after first login.</p>
     </form>
   </div>
@@ -344,7 +344,20 @@
 <div class="toast" id="toast"></div>
 
 <script type="module">
-import { upload } from 'https://esm.sh/@vercel/blob@0.27.0/client?bundle';
+/* Lazy-load the Vercel Blob client SDK only when an upload happens.
+ * Keeps login working even if esm.sh is slow or blocked. */
+let _upload = null;
+async function getUploadFn() {
+  if (_upload) return _upload;
+  try {
+    const mod = await import('https://esm.sh/@vercel/blob@0.27.0/client?bundle');
+    _upload = mod.upload;
+    return _upload;
+  } catch (e) {
+    console.error('Failed to load @vercel/blob/client', e);
+    throw new Error('Upload library could not load. Refresh the page.');
+  }
+}
 
 const $  = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => [...r.querySelectorAll(s)];
@@ -379,16 +392,26 @@ async function init() {
 }
 
 function setupLogin() {
-  $('#loginForm').addEventListener('submit', async e => {
-    e.preventDefault();
-    const { ok, j } = await api('/api/auth?action=login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: $('#loginPass').value }),
-    });
-    if (ok) location.reload();
-    else toast(j.error || 'Login failed', 'err');
-  });
+  const submit = async () => {
+    const btn = $('#loginSubmit');
+    btn.disabled = true;
+    try {
+      const { ok, j } = await api('/api/auth?action=login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: $('#loginPass').value }),
+      });
+      if (ok) location.reload();
+      else toast(j.error || 'Login failed', 'err');
+    } catch (e) {
+      console.error(e);
+      toast('Network error', 'err');
+    } finally {
+      btn.disabled = false;
+    }
+  };
+  $('#loginSubmit').addEventListener('click', submit);
+  $('#loginPass').addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
 }
 
 function setupApp() {
@@ -420,6 +443,7 @@ async function uploadFile(file) {
   if (!file) return null;
   if (file.size > 8 * 1024 * 1024) { toast('File too large (max 8 MB)', 'err'); return null; }
   try {
+    const upload = await getUploadFn();
     const blob = await upload(file.name, file, {
       access: 'public',
       handleUploadUrl: '/api/upload',
