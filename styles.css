@@ -1109,25 +1109,62 @@ a.contact-val:hover { color: var(--gold); }
   letter-spacing: 0;
 }
 
-/* Massive faint numeral watermark (top-right) */
+/* Massive faint wordmark watermark — brand name itself */
 .hero-mark {
   position: absolute;
-  top: 96px;
-  right: clamp(60px, 8vw, 120px);
+  bottom: 22vh;
+  right: clamp(-30px, -1vw, 0px);
   font-family: var(--ff-serif);
   font-style: italic;
-  font-size: clamp(80px, 14vw, 200px);
+  font-size: clamp(180px, 28vw, 460px);
   font-weight: 300;
-  line-height: 0.85;
-  color: rgba(212, 175, 55, 0.06);
+  line-height: 0.78;
+  color: rgba(212, 175, 55, 0.055);
   z-index: 2;
   user-select: none;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  pointer-events: none;
 }
-.hero-mark em {
-  font-style: italic;
+
+/* Hero masthead — readable brand lockup at top of content */
+.hero-brand {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 64px;
+}
+.hero-brand-rule {
+  flex: 0 0 56px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold));
+  opacity: 0.7;
+}
+.hero-brand-name {
+  font-family: var(--ff-serif);
+  font-size: clamp(20px, 1.8vw, 28px);
   font-weight: 500;
-  color: rgba(212, 175, 55, 0.10);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.hero-brand-name em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 0.22em;
+  text-shadow: 0 0 14px rgba(212, 175, 55, 0.35);
+  margin-left: 4px;
+}
+.hero-brand-est {
+  font-family: var(--ff-sans);
+  font-size: 9.5px;
+  letter-spacing: 0.36em;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  margin-left: auto;
+  padding-left: 22px;
+  border-left: 1px solid var(--line);
 }
 
 /* Hero foot strip — stats + scroll cue */
@@ -1459,20 +1496,128 @@ a.contact-val:hover { color: var(--gold); }
   letter-spacing: 0.32em;
 }
 
-/* ---------- responsive hero refinement ---------- */
+/* ---------- pull quote (about section) ---------- */
+
+.pull-quote {
+  position: relative;
+  margin: 36px 0 36px clamp(14px, 3vw, 40px);
+  padding: 28px 0 28px 32px;
+  border-left: 1px solid var(--gold);
+  max-width: 56ch;
+}
+.pull-quote-mark {
+  position: absolute;
+  left: -8px; top: -28px;
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-size: 110px;
+  line-height: 1;
+  color: var(--gold);
+  opacity: 0.55;
+  text-shadow: 0 0 24px rgba(212, 175, 55, 0.30);
+  user-select: none;
+  pointer-events: none;
+}
+.pull-quote p {
+  font-family: var(--ff-serif) !important;
+  font-style: italic;
+  font-weight: 400 !important;
+  font-size: clamp(20px, 1.8vw, 26px) !important;
+  line-height: 1.5 !important;
+  color: var(--cream) !important;
+  margin: 0 !important;
+  letter-spacing: 0.005em;
+}
+.pull-quote cite {
+  display: block;
+  margin-top: 14px;
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-family: var(--ff-sans);
+}
+
+/* ---------- ornament divider between sections ---------- */
+
+.section + .section::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  width: 1px; height: 56px;
+  background: linear-gradient(to bottom, transparent, var(--gold) 60%, transparent);
+  transform: translateX(-50%);
+  opacity: 0.35;
+  z-index: 2;
+}
+.section + .section::after {
+  content: "✦";
+  position: absolute;
+  top: 22px; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--ff-serif);
+  font-size: 14px;
+  color: var(--gold);
+  background: var(--bg);
+  padding: 0 12px;
+  z-index: 3;
+  text-shadow: 0 0 14px rgba(212, 175, 55, 0.35);
+}
+
+/* ---------- nav brand: more prominent ---------- */
+
+.nav-logo-text {
+  font-size: 19px;
+  letter-spacing: 0.26em;
+  font-weight: 500;
+}
+.nav-logo-text em {
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  margin-left: 4px;
+}
+
+/* ---------- footer brand: bigger, more masthead ---------- */
+
+.footer { padding: 80px 0 50px; }
+.footer-brand {
+  flex-direction: column;
+  gap: 14px;
+}
+.footer-brand img {
+  width: 56px; height: 56px;
+}
+.footer-brand span {
+  font-size: 22px;
+  letter-spacing: 0.28em;
+  font-weight: 500;
+}
+.footer-brand em {
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-shadow: 0 0 14px rgba(212, 175, 55, 0.30);
+}
+
+/* ---------- responsive ---------- */
 
 @media (max-width: 760px) {
   .hero-side { display: none; }
-  .hero-mark { font-size: 110px; top: 80px; right: 16px; }
-  .hero-line-1, .hero-sub, .hero-cta { margin-left: 0; }
+  .hero-mark { font-size: 30vw; bottom: 30vh; right: -10px; }
+  .hero-brand { gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
+  .hero-brand-rule { flex-basis: 32px; }
+  .hero-brand-est { margin-left: 0; padding-left: 0; border-left: 0; }
+  .hero-line-1, .hero-sub, .hero-cta, .hero-brand { margin-left: 0; }
   .hero-eyebrow { padding-left: 0; }
   .hero-eyebrow::before { display: none; }
-  .hero-content { padding-bottom: 220px; }
+  .hero-content { padding-bottom: 220px; padding-top: 130px; }
   .hero-foot { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px 22px; }
   .hero-scroll-bar { align-self: flex-end; }
   .bg-numeral { font-size: 30vw; }
   .section-header-flex { flex-direction: column; align-items: flex-start; }
   .section-meta { text-align: left; }
+  .pull-quote { margin-left: 0; }
+  .section + .section::before { height: 40px; }
 }
 
 
