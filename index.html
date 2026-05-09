@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grove Business — Luxury Car Rental Portugal</title>
+  <meta name="description" content="Premium luxury car rental in Portugal. Mercedes-Benz, Audi, BMW, Porsche, Range Rover. Lisbon · Porto · Algarve. Delivered to your door." />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="logo.png" type="image/png" />
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div class="loader" id="loader">
+    <div class="loader-ring"></div>
+    <div class="loader-mark">GB</div>
+  </div>
+
+  <!-- RACING CAR (flies across screen on scroll / CTA click) -->
+  <div class="car-race" aria-hidden="true">
+    <svg viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="goldRace" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%"  stop-color="#bf953f"/>
+          <stop offset="35%" stop-color="#fcf6ba"/>
+          <stop offset="60%" stop-color="#d4af37"/>
+          <stop offset="100%" stop-color="#aa771c"/>
+        </linearGradient>
+        <radialGradient id="head" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%"   stop-color="#fff8d8" stop-opacity="1"/>
+          <stop offset="60%"  stop-color="#fcf6ba" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#fcf6ba" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <!-- speed lines (left, trailing) -->
+      <g opacity="0.85">
+        <rect x="2"  y="34" width="70" height="1.8" rx="1" fill="url(#goldRace)"/>
+        <rect x="14" y="48" width="58" height="1.8" rx="1" fill="url(#goldRace)"/>
+        <rect x="6"  y="62" width="64" height="1.8" rx="1" fill="url(#goldRace)"/>
+        <rect x="22" y="76" width="48" height="1.8" rx="1" fill="url(#goldRace)"/>
+      </g>
+      <!-- car body silhouette (front on right) -->
+      <path d="M82 76 L96 56 Q104 40 124 38 L168 30 Q198 26 222 32 L260 44 Q286 54 290 76 Z"
+            fill="url(#goldRace)"/>
+      <!-- glass / cabin -->
+      <path d="M126 40 L168 32 L210 34 L226 52 L122 52 Z"
+            fill="#0a0a0a" opacity="0.55"/>
+      <!-- side accent line -->
+      <path d="M88 68 Q170 60 286 70" stroke="#fff8d8" stroke-opacity="0.35" stroke-width="1" fill="none"/>
+      <!-- headlight glow -->
+      <circle cx="282" cy="58" r="9" fill="url(#head)"/>
+      <!-- wheels -->
+      <circle cx="138" cy="78" r="14" fill="#0a0a0a" stroke="url(#goldRace)" stroke-width="2"/>
+      <circle cx="138" cy="78" r="5"  fill="#1a1a1a" stroke="#d4af37" stroke-width="0.8"/>
+      <circle cx="248" cy="78" r="14" fill="#0a0a0a" stroke="url(#goldRace)" stroke-width="2"/>
+      <circle cx="248" cy="78" r="5"  fill="#1a1a1a" stroke="#d4af37" stroke-width="0.8"/>
+    </svg>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo" aria-label="Grove Business home">
+        <img src="logo.png" alt="" onerror="this.style.display='none'" />
+        <span class="nav-logo-text">GROVE <em>BUSINESS</em></span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#fleet" data-i18n="nav.fleet">Fleet</a></li>
+        <li><a href="#services" data-i18n="nav.services">Services</a></li>
+        <li><a href="#about" data-i18n="nav.about">About</a></li>
+        <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button data-lang="en" class="active" aria-label="English">EN</button>
+          <span class="lang-sep"></span>
+          <button data-lang="pt" aria-label="Português">PT</button>
+          <span class="lang-sep"></span>
+          <button data-lang="nl" aria-label="Nederlands">NL</button>
+        </div>
+        <a href="#contact" class="btn btn-gold btn-sm" data-i18n="nav.book">Reserve</a>
+      </div>
+
+      <button class="nav-burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="nav-mobile" id="navMobile">
+      <a href="#fleet" data-i18n="nav.fleet">Fleet</a>
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="home">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-veil" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <span class="eyebrow" data-i18n="hero.eyebrow">PORTUGAL · ESTABLISHED EXCELLENCE</span>
+      <h1 class="hero-title">
+        <span data-i18n="hero.line1">Drive the</span>
+        <span class="gold-text" data-i18n="hero.line2">Extraordinary.</span>
+      </h1>
+      <p class="hero-sub" data-i18n="hero.sub">Mercedes-Benz · Audi · BMW · Porsche · Range Rover. Hand-delivered in Lisbon, Porto and the Algarve.</p>
+      <div class="hero-cta">
+        <a href="#fleet" class="btn btn-gold" data-i18n="hero.cta1">Explore the Fleet</a>
+        <a href="#contact" class="btn btn-ghost" data-i18n="hero.cta2">Speak to Concierge</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <span data-i18n="hero.scroll">SCROLL</span>
+      <i></i>
+    </div>
+  </header>
+
+  <!-- BRAND MARQUEE -->
+  <section class="brands" aria-label="Brands">
+    <div class="marquee">
+      <div class="marquee-track">
+        <span>MERCEDES-BENZ</span><b>·</b>
+        <span>AUDI</span><b>·</b>
+        <span>BMW</span><b>·</b>
+        <span>PORSCHE</span><b>·</b>
+        <span>RANGE ROVER</span><b>·</b>
+        <span>LAMBORGHINI</span><b>·</b>
+        <span>BENTLEY</span><b>·</b>
+        <span>MERCEDES-BENZ</span><b>·</b>
+        <span>AUDI</span><b>·</b>
+        <span>BMW</span><b>·</b>
+        <span>PORSCHE</span><b>·</b>
+        <span>RANGE ROVER</span><b>·</b>
+        <span>LAMBORGHINI</span><b>·</b>
+        <span>BENTLEY</span><b>·</b>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="intro section">
+    <div class="container intro-grid">
+      <div>
+        <span class="eyebrow" data-i18n="intro.eyebrow">— THE GROVE STANDARD</span>
+        <h2 class="section-title" data-i18n="intro.title">A private collection, at your service.</h2>
+      </div>
+      <p class="intro-text" data-i18n="intro.body">Grove Business curates a fleet of immaculately prepared luxury and performance vehicles for guests visiting Portugal. Every car is detailed before delivery, fully insured, and accompanied by a concierge who understands that arrival matters as much as the destination.</p>
+    </div>
+  </section>
+
+  <!-- FLEET -->
+  <section class="section section-fleet" id="fleet">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow" data-i18n="fleet.eyebrow">— THE FLEET</span>
+        <h2 class="section-title" data-i18n="fleet.title">Curated for the discerning.</h2>
+      </div>
+
+      <div class="fleet-grid">
+
+        <article class="car-card" data-reveal>
+          <div class="car-img" style="background-image:url('https://images.unsplash.com/photo-1622200294772-e411df76e3a2?w=1400&q=85&auto=format&fit=crop')"></div>
+          <div class="car-body">
+            <span class="car-class">SUV · OFF-ROAD ICON</span>
+            <h3 class="car-name">Mercedes-AMG G 63</h3>
+            <ul class="car-specs">
+              <li>4.0L V8 Biturbo</li>
+              <li>585 HP</li>
+              <li>Auto · 4 Seats</li>
+            </ul>
+            <div class="car-foot">
+              <span class="car-price"><i data-i18n="fleet.from">from</i> €650<em>/day</em></span>
+              <a href="#contact" class="car-cta" data-i18n="fleet.inquire">Inquire <span>→</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="car-card" data-reveal>
+          <div class="car-img" style="background-image:url('https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=1400&q=85&auto=format&fit=crop')"></div>
+          <div class="car-body">
+            <span class="car-class">SPORT WAGON</span>
+            <h3 class="car-name">Audi RS 6 Avant</h3>
+            <ul class="car-specs">
+              <li>4.0L V8 TFSI</li>
+              <li>600 HP</li>
+              <li>Auto · 5 Seats</li>
+            </ul>
+            <div class="car-foot">
+              <span class="car-price"><i data-i18n="fleet.from">from</i> €450<em>/day</em></span>
+              <a href="#contact" class="car-cta" data-i18n="fleet.inquire">Inquire <span>→</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="car-card" data-reveal>
+          <div class="car-img" style="background-image:url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1400&q=85&auto=format&fit=crop')"></div>
+          <div class="car-body">
+            <span class="car-class">SPORTS COUPE</span>
+            <h3 class="car-name">Porsche 911 Carrera</h3>
+            <ul class="car-specs">
+              <li>3.0L Twin-Turbo</li>
+              <li>450 HP</li>
+              <li>PDK · 2+2 Seats</li>
+            </ul>
+            <div class="car-foot">
+              <span class="car-price"><i data-i18n="fleet.from">from</i> €550<em>/day</em></span>
+              <a href="#contact" class="car-cta" data-i18n="fleet.inquire">Inquire <span>→</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="car-card" data-reveal>
+          <div class="car-img" style="background-image:url('https://images.unsplash.com/photo-1519440054040-ea13a3a2e2a7?w=1400&q=85&auto=format&fit=crop')"></div>
+          <div class="car-body">
+            <span class="car-class">LUXURY SUV</span>
+            <h3 class="car-name">Range Rover Autobiography</h3>
+            <ul class="car-specs">
+              <li>4.4L V8</li>
+              <li>530 HP</li>
+              <li>Auto · 5 Seats</li>
+            </ul>
+            <div class="car-foot">
+              <span class="car-price"><i data-i18n="fleet.from">from</i> €495<em>/day</em></span>
+              <a href="#contact" class="car-cta" data-i18n="fleet.inquire">Inquire <span>→</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="car-card" data-reveal>
+          <div class="car-img" style="background-image:url('https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=1400&q=85&auto=format&fit=crop')"></div>
+          <div class="car-body">
+            <span class="car-class">EXECUTIVE SEDAN</span>
+            <h3 class="car-name">Mercedes-Benz S-Class</h3>
+            <ul class="car-specs">
+              <li>3.0L Inline-6</li>
+              <li>435 HP</li>
+              <li>Auto · 5 Seats</li>
+            </ul>
+            <div class="car-foot">
+              <span class="car-price"><i data-i18n="fleet.from">from</i> €420<em>/day</em></span>
+              <a href="#contact" class="car-cta" data-i18n="fleet.inquire">Inquire <span>→</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="car-card" data-reveal>
+          <div class="car-img" style="background-image:url('https://images.unsplash.com/photo-1614200179396-2bdb77ebf81b?w=1400&q=85&auto=format&fit=crop')"></div>
+          <div class="car-body">
+            <span class="car-class">SUPER SUV</span>
+            <h3 class="car-name">Lamborghini Urus</h3>
+            <ul class="car-specs">
+              <li>4.0L V8 Biturbo</li>
+              <li>650 HP</li>
+              <li>Auto · 5 Seats</li>
+            </ul>
+            <div class="car-foot">
+              <span class="car-price"><i data-i18n="fleet.from">from</i> €1.250<em>/day</em></span>
+              <a href="#contact" class="car-cta" data-i18n="fleet.inquire">Inquire <span>→</span></a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="fleet-note" data-i18n="fleet.note">Our complete collection includes more than 30 vehicles. Tell us your dates — we will source the right car.</p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section section-services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow" data-i18n="services.eyebrow">— SERVICES</span>
+        <h2 class="section-title" data-i18n="services.title">Beyond the keys.</h2>
+      </div>
+
+      <div class="services-grid">
+        <div class="service" data-reveal>
+          <div class="service-num">01</div>
+          <h3 data-i18n="services.s1.title">Airport Delivery</h3>
+          <p data-i18n="services.s1.body">Your vehicle, valeted and ready, the moment you land at LIS, OPO or FAO. No queues. No paperwork at the counter.</p>
+        </div>
+        <div class="service" data-reveal>
+          <div class="service-num">02</div>
+          <h3 data-i18n="services.s2.title">Private Chauffeur</h3>
+          <p data-i18n="services.s2.body">Discreet, multilingual chauffeurs for business travel, vineyard tours along the Douro, or evenings in Cascais.</p>
+        </div>
+        <div class="service" data-reveal>
+          <div class="service-num">03</div>
+          <h3 data-i18n="services.s3.title">Weddings & Events</h3>
+          <p data-i18n="services.s3.body">An arrival worth photographing. Curated cars and full coordination for the day that matters most.</p>
+        </div>
+        <div class="service" data-reveal>
+          <div class="service-num">04</div>
+          <h3 data-i18n="services.s4.title">Long-Term Lease</h3>
+          <p data-i18n="services.s4.body">Monthly programmes for residents and extended stays — flexible terms, full service, replacement on request.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / SPLIT -->
+  <section class="section section-about" id="about">
+    <div class="container about-grid">
+      <div class="about-img" data-reveal></div>
+      <div class="about-text" data-reveal>
+        <span class="eyebrow" data-i18n="about.eyebrow">— THE HOUSE</span>
+        <h2 class="section-title" data-i18n="about.title">Built on trust. Delivered with discretion.</h2>
+        <p data-i18n="about.p1">Grove Business operates from the heart of Portugal, serving private clients, high-end travellers and corporate guests who expect nothing less than perfection.</p>
+        <p data-i18n="about.p2">Every booking is handled personally. Every car arrives valeted, fuelled, and on time. We are small enough to remember your name — and large enough to source the car you want, when you want it.</p>
+        <ul class="about-list">
+          <li data-i18n="about.l1">— Fully insured fleet, all vehicles &lt; 2 years old</li>
+          <li data-i18n="about.l2">— 24/7 multilingual concierge support</li>
+          <li data-i18n="about.l3">— Delivery anywhere in mainland Portugal</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section section-contact" id="contact">
+    <div class="container contact-inner">
+      <span class="eyebrow" data-i18n="contact.eyebrow">— RESERVATIONS</span>
+      <h2 class="section-title" data-i18n="contact.title">Tell us where, and when.</h2>
+      <p class="contact-sub" data-i18n="contact.sub">A private message is the fastest way to secure your car. Our concierge replies within minutes.</p>
+
+      <a href="https://wa.me/351900000000" class="whatsapp-btn" target="_blank" rel="noopener" data-wa>
+        <svg viewBox="0 0 32 32" width="26" height="26" fill="currentColor" aria-hidden="true">
+          <path d="M19.11 17.21c-.3-.15-1.78-.88-2.06-.98-.27-.1-.47-.15-.67.15-.2.3-.77.98-.95 1.18-.18.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.67-2.08-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.06 2.87 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.22 1.36.19 1.87.12.57-.08 1.78-.73 2.03-1.43.25-.7.25-1.3.18-1.43-.07-.13-.27-.2-.57-.35zM16 4C9.37 4 4 9.37 4 16c0 2.12.55 4.18 1.6 6L4 28l6.21-1.62A11.93 11.93 0 0 0 16 28c6.63 0 12-5.37 12-12S22.63 4 16 4z"/>
+        </svg>
+        <div>
+          <span class="whatsapp-btn-label" data-i18n="contact.wa1">Chat on WhatsApp</span>
+          <span class="whatsapp-btn-sub" data-i18n="contact.wa2">Replies within minutes — 24/7</span>
+        </div>
+      </a>
+
+      <div class="contact-grid">
+        <div>
+          <span class="contact-key" data-i18n="contact.phone">Phone</span>
+          <a href="tel:+351900000000" class="contact-val" data-phone>+351 900 000 000</a>
+        </div>
+        <div>
+          <span class="contact-key" data-i18n="contact.email">Email</span>
+          <a href="mailto:concierge@grovebusiness.pt" class="contact-val" data-email>concierge@grovebusiness.pt</a>
+        </div>
+        <div>
+          <span class="contact-key" data-i18n="contact.location">Location</span>
+          <span class="contact-val" data-location>Lisbon · Porto · Algarve</span>
+        </div>
+        <div>
+          <span class="contact-key" data-i18n="contact.hours">Hours</span>
+          <span class="contact-val" data-i18n="contact.hoursVal">24 / 7 · By appointment</span>
+        </div>
+        <div data-address-row hidden>
+          <span class="contact-key">Address</span>
+          <span class="contact-val" data-address></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="" onerror="this.style.display='none'" />
+        <span>GROVE <em>BUSINESS</em></span>
+      </div>
+      <p class="footer-tag" data-i18n="footer.tag">Luxury car rental · Portugal</p>
+      <p class="footer-copy">© <span id="year"></span> Grove Business. <span data-i18n="footer.rights">All rights reserved.</span></p>
+    </div>
+  </footer>
+
+  <!-- FLOATING WHATSAPP -->
+  <a href="https://wa.me/351900000000" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp" data-wa>
+    <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor" aria-hidden="true">
+      <path d="M19.11 17.21c-.3-.15-1.78-.88-2.06-.98-.27-.1-.47-.15-.67.15-.2.3-.77.98-.95 1.18-.18.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.67-2.08-.18-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.06 2.87 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.22 1.36.19 1.87.12.57-.08 1.78-.73 2.03-1.43.25-.7.25-1.3.18-1.43-.07-.13-.27-.2-.57-.35zM16 4C9.37 4 4 9.37 4 16c0 2.12.55 4.18 1.6 6L4 28l6.21-1.62A11.93 11.93 0 0 0 16 28c6.63 0 12-5.37 12-12S22.63 4 16 4z"/>
+    </svg>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>

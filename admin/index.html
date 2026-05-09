@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Grove Business — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0a0a0a;--bg-2:#141414;--bg-3:#1c1c1c;
+    --line:rgba(212,175,55,.18);--line-strong:rgba(212,175,55,.45);
+    --text:#e9e6df;--mute:#8c8a85;--dim:#5a5853;
+    --gold:#d4af37;--gold-soft:#f5d76e;
+    --gold-grad:linear-gradient(135deg,#bf953f,#fcf6ba 38%,#d4af37 60%,#aa771c);
+    --red:#e74c3c;--green:#25d366;
+    --ff-serif:"Cormorant Garamond",serif;
+    --ff-sans:"Inter",-apple-system,system-ui,sans-serif;
+    --ease:cubic-bezier(.65,.05,.36,1);
+  }
+  body{background:var(--bg);color:var(--text);font:300 14px/1.55 var(--ff-sans);min-height:100vh;-webkit-font-smoothing:antialiased}
+  a{color:var(--gold);text-decoration:none}
+  ::selection{background:var(--gold);color:#000}
+
+  .login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+    background:radial-gradient(ellipse at 50% 0,rgba(212,175,55,.15),transparent 60%),var(--bg)}
+  .login-box{width:100%;max-width:380px;background:var(--bg-2);border:1px solid var(--line);padding:48px 40px;text-align:center;
+    box-shadow:0 0 60px -20px rgba(212,175,55,.2)}
+  .login-mark{font-family:var(--ff-serif);font-style:italic;font-size:42px;background:var(--gold-grad);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 0 20px rgba(212,175,55,.25))}
+  .login-sub{font-size:11px;letter-spacing:.32em;color:var(--mute);text-transform:uppercase;margin:6px 0 32px}
+
+  .top{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;
+    padding:16px 28px;border-bottom:1px solid var(--line);background:rgba(10,10,10,.92);backdrop-filter:blur(12px)}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand img{width:32px;height:32px;border-radius:50%;object-fit:cover}
+  .brand-text{font-family:var(--ff-serif);font-size:16px;letter-spacing:.18em;text-transform:uppercase}
+  .brand-text em{font-style:italic;color:var(--gold)}
+  .badge{font-size:10px;letter-spacing:.3em;padding:4px 10px;border:1px solid var(--gold);color:var(--gold);
+    text-transform:uppercase;margin-left:14px;text-shadow:0 0 8px rgba(212,175,55,.3)}
+  .top-actions{display:flex;align-items:center;gap:14px}
+  .top-link{font-size:11px;letter-spacing:.22em;color:var(--mute);text-transform:uppercase;padding:8px 14px;
+    border:1px solid var(--line);transition:color .25s,border-color .25s,box-shadow .25s;cursor:pointer;background:transparent;font-family:inherit}
+  .top-link:hover{color:var(--text);border-color:var(--line-strong);box-shadow:0 0 14px -4px rgba(212,175,55,.3)}
+
+  .tabs{display:flex;gap:4px;padding:0 28px;border-bottom:1px solid var(--line);background:#0a0a0a}
+  .tab{padding:18px 22px;font-size:11px;letter-spacing:.24em;color:var(--mute);text-transform:uppercase;
+    border-bottom:1px solid transparent;cursor:pointer;transition:color .25s,border-color .25s;background:none;border-top:0;border-left:0;border-right:0;font-family:inherit}
+  .tab:hover{color:var(--text)}
+  .tab.active{color:var(--gold);border-bottom-color:var(--gold);text-shadow:0 0 10px rgba(212,175,55,.35)}
+
+  .panel{max-width:1080px;margin:0 auto;padding:48px 28px 120px}
+  .panel-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:36px;flex-wrap:wrap}
+  .panel-title{font-family:var(--ff-serif);font-style:italic;font-size:36px;font-weight:400;line-height:1.1}
+  .panel-sub{font-size:13px;color:var(--mute);margin-top:4px}
+
+  .field{margin-bottom:20px}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  label{display:block;font-size:10px;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+  .hint{font-size:11px;color:var(--dim);margin-top:6px;letter-spacing:.04em}
+  .hint code{color:var(--gold)}
+  input[type=text],input[type=email],input[type=tel],input[type=password],input[type=number],textarea,select{
+    width:100%;background:#0d0d0d;border:1px solid var(--line);color:var(--text);
+    font:300 14px/1.5 var(--ff-sans);padding:12px 14px;outline:none;transition:border-color .25s,background .25s,box-shadow .25s}
+  input:focus,textarea:focus,select:focus{border-color:var(--gold);background:#101010;box-shadow:0 0 0 3px rgba(212,175,55,.08)}
+  textarea{min-height:96px;resize:vertical}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;
+    font:500 11px/1 var(--ff-sans);letter-spacing:.22em;text-transform:uppercase;
+    border:1px solid transparent;cursor:pointer;transition:all .3s var(--ease);font-family:inherit}
+  .btn-gold{background:var(--gold);color:#0a0a0a;border-color:var(--gold);box-shadow:0 0 0 0 rgba(212,175,55,0)}
+  .btn-gold:hover{background:#fcf6ba;transform:translateY(-1px);box-shadow:0 8px 22px -8px rgba(212,175,55,.55),0 0 18px -4px rgba(212,175,55,.5)}
+  .btn-ghost{background:transparent;color:var(--text);border-color:rgba(255,255,255,.18)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .btn-danger{background:transparent;color:var(--red);border-color:rgba(231,76,60,.4)}
+  .btn-danger:hover{background:rgba(231,76,60,.12);border-color:var(--red)}
+  .btn-sm{padding:8px 14px;font-size:10px}
+  .btn[disabled]{opacity:.5;pointer-events:none}
+  .btn-block{width:100%}
+
+  .fleet-list{display:flex;flex-direction:column;gap:14px;margin-bottom:32px}
+  .car-row{display:grid;grid-template-columns:120px 1fr auto;gap:20px;align-items:center;
+    background:var(--bg-2);border:1px solid var(--line);padding:14px;transition:border-color .3s,box-shadow .3s}
+  .car-row:hover{border-color:var(--line-strong);box-shadow:0 0 24px -10px rgba(212,175,55,.25)}
+  .car-thumb{width:120px;height:80px;background:#0a0a0a center/cover no-repeat;border:1px solid var(--line)}
+  .car-row-info h3{font-family:var(--ff-serif);font-style:italic;font-size:22px;font-weight:400;margin-bottom:4px}
+  .car-row-info .car-row-class{font-size:10px;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+  .car-row-info .car-row-meta{font-size:12px;color:var(--mute)}
+  .car-row-info .car-row-meta b{color:var(--text);font-weight:500}
+  .car-row-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  .icon-btn{width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+    background:transparent;border:1px solid var(--line);color:var(--mute);cursor:pointer;transition:all .25s;font-family:inherit}
+  .icon-btn:hover{color:var(--gold);border-color:var(--gold)}
+  .icon-btn.danger:hover{color:var(--red);border-color:var(--red)}
+
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);z-index:100;
+    display:none;align-items:center;justify-content:center;padding:24px}
+  .modal-bg.open{display:flex}
+  .modal{background:var(--bg-2);border:1px solid var(--line-strong);width:100%;max-width:680px;
+    max-height:90vh;overflow:auto;padding:36px;box-shadow:0 0 80px -20px rgba(212,175,55,.25)}
+  .modal h2{font-family:var(--ff-serif);font-style:italic;font-size:30px;font-weight:400;margin-bottom:24px}
+  .modal-foot{display:flex;justify-content:flex-end;gap:10px;margin-top:28px;padding-top:24px;border-top:1px solid var(--line)}
+
+  .img-picker{display:grid;grid-template-columns:160px 1fr;gap:18px;align-items:start}
+  .img-preview{width:160px;height:120px;background:#0a0a0a center/cover no-repeat;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+  .img-controls{display:flex;flex-direction:column;gap:10px}
+  .upload-area{border:1px dashed var(--line-strong);padding:14px;text-align:center;cursor:pointer;transition:all .25s;font-size:12px;color:var(--mute);display:block}
+  .upload-area:hover{border-color:var(--gold);color:var(--gold);background:rgba(212,175,55,.04);box-shadow:inset 0 0 24px -8px rgba(212,175,55,.18)}
+  .upload-area.dragging{border-color:var(--gold);background:rgba(212,175,55,.08);color:var(--gold)}
+  .upload-area input{display:none}
+
+  .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--bg-3);border:1px solid var(--line-strong);padding:14px 24px;
+    font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    opacity:0;transition:all .35s var(--ease);z-index:200;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);box-shadow:0 0 30px -10px rgba(212,175,55,.35)}
+  .toast.err{border-color:var(--red);color:#ffb1a8;box-shadow:0 0 30px -10px rgba(231,76,60,.4)}
+  .toast.ok{border-color:var(--green);color:#9ce5b6}
+
+  .empty{text-align:center;padding:60px 20px;color:var(--mute);border:1px dashed var(--line)}
+  .empty p{font-family:var(--ff-serif);font-style:italic;font-size:18px;margin-bottom:14px}
+
+  .alert{background:rgba(231,76,60,.08);border:1px solid rgba(231,76,60,.35);color:#ffb1a8;
+    padding:14px 18px;font-size:12px;letter-spacing:.06em;margin-bottom:24px}
+  .alert b{color:#ff8b7e}
+
+  hr{border:0;border-top:1px solid var(--line);margin:36px 0}
+  .section-h{font-family:var(--ff-serif);font-style:italic;font-size:22px;margin:8px 0 18px;font-weight:400}
+
+  @media (max-width:760px){
+    .field-row,.field-row-3,.car-row,.img-picker{grid-template-columns:1fr}
+    .car-thumb{width:100%;height:140px}
+    .panel{padding:30px 18px 100px}
+    .top{padding:14px 18px}
+    .tabs{padding:0 12px;overflow:auto;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab{padding:14px 14px}
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN VIEW -->
+<div class="login" id="loginView" hidden>
+  <div class="login-box">
+    <div class="login-mark">Grove</div>
+    <div class="login-sub">Admin · Sign in</div>
+    <form id="loginForm">
+      <div class="field"><input type="password" id="loginPass" placeholder="Password" autofocus required /></div>
+      <button class="btn btn-gold btn-block" type="submit">Enter</button>
+      <p class="hint" style="margin-top:18px;text-align:center">Default password: <code>grove2026</code> — change it after first login.</p>
+    </form>
+  </div>
+</div>
+
+<!-- DASHBOARD VIEW -->
+<div id="appView" hidden>
+  <header class="top">
+    <div class="brand">
+      <img src="../logo.png" alt="" onerror="this.style.display='none'" />
+      <span class="brand-text">GROVE <em>BUSINESS</em></span>
+      <span class="badge">Admin</span>
+    </div>
+    <div class="top-actions">
+      <a class="top-link" href="../" target="_blank">View Site ↗</a>
+      <button class="top-link" id="logoutBtn">Sign out</button>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="fleet">Fleet</button>
+    <button class="tab" data-tab="hero">Hero &amp; About</button>
+    <button class="tab" data-tab="contact">Contact</button>
+    <button class="tab" data-tab="account">Account</button>
+  </nav>
+
+  <!-- FLEET PANE -->
+  <section class="panel" data-pane="fleet">
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Your Fleet</div>
+        <div class="panel-sub">Add, edit and re-order the cars shown on the public site.</div>
+      </div>
+      <button class="btn btn-gold" id="addCarBtn">+ Add vehicle</button>
+    </div>
+    <div class="fleet-list" id="fleetList"></div>
+    <div style="display:flex;justify-content:flex-end;gap:10px">
+      <button class="btn btn-ghost" id="resetFleetBtn">Reload</button>
+      <button class="btn btn-gold" id="saveFleetBtn">Save fleet</button>
+    </div>
+  </section>
+
+  <!-- HERO &amp; ABOUT PANE -->
+  <section class="panel" data-pane="hero" hidden>
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Hero &amp; About</div>
+        <div class="panel-sub">Override the headline copy and key images on the homepage. Leave a field empty to keep the default.</div>
+      </div>
+    </div>
+
+    <h3 class="section-h">Hero section</h3>
+    <div class="field"><label>Eyebrow</label><input type="text" id="heroEyebrow" placeholder="PORTUGAL · ESTABLISHED EXCELLENCE" /></div>
+    <div class="field-row">
+      <div class="field"><label>Title — line 1</label><input type="text" id="heroTitleStart" placeholder="Drive the" /></div>
+      <div class="field"><label>Title — line 2 (gold italic)</label><input type="text" id="heroTitleEnd" placeholder="Extraordinary." /></div>
+    </div>
+    <div class="field"><label>Subtitle</label><textarea id="heroSubtitle" placeholder="Mercedes-Benz · Audi · BMW ..."></textarea></div>
+    <div class="field">
+      <label>Background image</label>
+      <div class="img-picker">
+        <div class="img-preview" id="heroImgPreview">No image</div>
+        <div class="img-controls">
+          <label class="upload-area" data-target="heroImage">
+            <input type="file" accept="image/*" />
+            Drop file or click to upload
+          </label>
+          <input type="text" id="heroImage" placeholder="…or paste image URL" />
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <h3 class="section-h">About section</h3>
+    <div class="field"><label>Title</label><input type="text" id="aboutTitle" placeholder="Built on trust. Delivered with discretion." /></div>
+    <div class="field"><label>Paragraph 1</label><textarea id="aboutP1"></textarea></div>
+    <div class="field"><label>Paragraph 2</label><textarea id="aboutP2"></textarea></div>
+    <div class="field">
+      <label>About image</label>
+      <div class="img-picker">
+        <div class="img-preview" id="aboutImgPreview">No image</div>
+        <div class="img-controls">
+          <label class="upload-area" data-target="aboutImage">
+            <input type="file" accept="image/*" />
+            Drop file or click to upload
+          </label>
+          <input type="text" id="aboutImage" placeholder="…or paste image URL" />
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:28px">
+      <button class="btn btn-gold" id="saveContentBtn">Save content</button>
+    </div>
+  </section>
+
+  <!-- CONTACT PANE -->
+  <section class="panel" data-pane="contact" hidden>
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Contact</div>
+        <div class="panel-sub">All numbers, addresses and the WhatsApp button on the public site read from here.</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>WhatsApp number</label>
+      <input type="text" id="cWhatsapp" placeholder="351912345678" />
+      <div class="hint">Country code + number. No spaces, no “+”. Example for Portugal: <code>351912345678</code></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Display phone</label><input type="text" id="cPhone" placeholder="+351 912 345 678" /></div>
+      <div class="field"><label>Email</label><input type="email" id="cEmail" placeholder="hello@grovebusiness.pt" /></div>
+    </div>
+    <div class="field"><label>Service area / cities</label><input type="text" id="cLocation" placeholder="Lisbon · Porto · Algarve" /></div>
+    <div class="field"><label>Full address (shown in footer)</label><input type="text" id="cAddress" placeholder="Av. da Liberdade 100, 1250-145 Lisboa" /></div>
+    <div class="field-row">
+      <div class="field"><label>Hours</label><input type="text" id="cHours" placeholder="24 / 7 · By appointment" /></div>
+      <div class="field"><label>Currency symbol</label><input type="text" id="cCurrency" placeholder="€" maxlength="3" /></div>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:28px">
+      <button class="btn btn-gold" id="saveContactBtn">Save contact</button>
+    </div>
+  </section>
+
+  <!-- ACCOUNT PANE -->
+  <section class="panel" data-pane="account" hidden>
+    <div class="panel-head">
+      <div>
+        <div class="panel-title">Account</div>
+        <div class="panel-sub">Change the password used to enter this admin panel.</div>
+      </div>
+    </div>
+
+    <div id="defaultPassAlert" class="alert" hidden>
+      <b>Heads up —</b> you are still using the default password <code>grove2026</code>. Please change it now.
+    </div>
+
+    <div class="field-row">
+      <div class="field"><label>Current password</label><input type="password" id="pCurrent" autocomplete="current-password" /></div>
+      <div class="field"><label>New password</label><input type="password" id="pNew" autocomplete="new-password" /></div>
+    </div>
+
+    <div style="display:flex;justify-content:flex-end;gap:10px">
+      <button class="btn btn-gold" id="changePassBtn">Update password</button>
+    </div>
+  </section>
+
+  <!-- CAR EDIT MODAL -->
+  <div class="modal-bg" id="carModal">
+    <div class="modal">
+      <h2 id="carModalTitle">Edit vehicle</h2>
+      <div class="field"><label>Name</label><input type="text" id="mName" placeholder="Mercedes-AMG G 63" /></div>
+      <div class="field"><label>Class / category</label><input type="text" id="mClass" placeholder="SUV · OFF-ROAD ICON" /></div>
+      <div class="field-row-3">
+        <div class="field"><label>Spec 1</label><input type="text" id="mSpec1" placeholder="4.0L V8" /></div>
+        <div class="field"><label>Spec 2</label><input type="text" id="mSpec2" placeholder="585 HP" /></div>
+        <div class="field"><label>Spec 3</label><input type="text" id="mSpec3" placeholder="Auto · 4 Seats" /></div>
+      </div>
+      <div class="field" style="max-width:240px">
+        <label>Price per day</label>
+        <input type="text" id="mPrice" placeholder="650" />
+        <div class="hint">Number only. The currency symbol is set in Contact.</div>
+      </div>
+      <div class="field">
+        <label>Photo</label>
+        <div class="img-picker">
+          <div class="img-preview" id="mImgPreview">No image</div>
+          <div class="img-controls">
+            <label class="upload-area" data-target="mImage">
+              <input type="file" accept="image/*" />
+              Drop a photo here or click to upload
+            </label>
+            <input type="text" id="mImage" placeholder="…or paste image URL" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-ghost" id="mCancel">Cancel</button>
+        <button class="btn btn-gold" id="mSave">Save vehicle</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { upload } from 'https://esm.sh/@vercel/blob@0.27.0/client?bundle';
+
+const $  = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+
+const api = (path, opts={}) =>
+  fetch(path, { credentials:'same-origin', ...opts })
+    .then(async r => ({ ok:r.ok, status:r.status, j: await r.json().catch(() => ({})) }));
+
+function toast(msg, kind='ok'){
+  const t = $('#toast');
+  t.className = 'toast show ' + kind;
+  t.textContent = msg;
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => t.className = 'toast ' + kind, 2600);
+}
+
+const escHtml = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cryptoId = () => 'car_' + Math.random().toString(36).slice(2, 10);
+
+/* ---------- ENTRY ---------- */
+async function init() {
+  const { j } = await api('/api/auth?action=me');
+  if (j.logged_in) {
+    $('#appView').hidden = false;
+    if (j.using_default) $('#defaultPassAlert').hidden = false;
+    setupApp();
+    await Promise.all([loadFleet(), loadConfig()]);
+  } else {
+    $('#loginView').hidden = false;
+    setupLogin();
+  }
+}
+
+function setupLogin() {
+  $('#loginForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const { ok, j } = await api('/api/auth?action=login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: $('#loginPass').value }),
+    });
+    if (ok) location.reload();
+    else toast(j.error || 'Login failed', 'err');
+  });
+}
+
+function setupApp() {
+  $$('.tab').forEach(b => b.addEventListener('click', () => {
+    $$('.tab').forEach(x => x.classList.toggle('active', x === b));
+    $$('[data-pane]').forEach(p => p.hidden = p.dataset.pane !== b.dataset.tab);
+  }));
+
+  $('#logoutBtn').addEventListener('click', async () => {
+    await api('/api/auth?action=logout', { method:'POST' });
+    location.reload();
+  });
+
+  $$('[data-target]').forEach(label => bindUploader(label));
+
+  $('#addCarBtn').addEventListener('click', () => openCarModal(-1));
+  $('#resetFleetBtn').addEventListener('click', loadFleet);
+  $('#saveFleetBtn').addEventListener('click', saveFleet);
+  $('#mCancel').addEventListener('click', () => $('#carModal').classList.remove('open'));
+  $('#carModal').addEventListener('click', e => { if (e.target.id === 'carModal') $('#carModal').classList.remove('open'); });
+  $('#mSave').addEventListener('click', saveCarFromModal);
+  $('#saveContactBtn').addEventListener('click', saveContact);
+  $('#saveContentBtn').addEventListener('click', saveContent);
+  $('#changePassBtn').addEventListener('click', changePassword);
+}
+
+/* ---------- UPLOAD ---------- */
+async function uploadFile(file) {
+  if (!file) return null;
+  if (file.size > 8 * 1024 * 1024) { toast('File too large (max 8 MB)', 'err'); return null; }
+  try {
+    const blob = await upload(file.name, file, {
+      access: 'public',
+      handleUploadUrl: '/api/upload',
+    });
+    return blob.url;
+  } catch (e) {
+    toast(e.message || 'Upload failed', 'err');
+    return null;
+  }
+}
+
+function bindUploader(label) {
+  const target = $('#' + label.dataset.target);
+  const orig = label.innerHTML;
+  const handleFile = async (file) => {
+    if (!file) return;
+    label.textContent = 'Uploading…';
+    const url = await uploadFile(file);
+    label.innerHTML = orig;
+    label.querySelector('input').addEventListener('change', e => handleFile(e.target.files[0]));
+    if (url) {
+      target.value = url;
+      target.dispatchEvent(new Event('input'));
+      toast('Uploaded');
+    }
+  };
+  label.querySelector('input').addEventListener('change', e => handleFile(e.target.files[0]));
+  label.addEventListener('dragover', e => { e.preventDefault(); label.classList.add('dragging'); });
+  label.addEventListener('dragleave', () => label.classList.remove('dragging'));
+  label.addEventListener('drop', e => {
+    e.preventDefault(); label.classList.remove('dragging');
+    handleFile(e.dataTransfer.files[0]);
+  });
+}
+
+function bindPreview(inputSel, previewSel) {
+  const inp = $(inputSel), prev = $(previewSel);
+  const update = () => {
+    const v = inp.value.trim();
+    if (v) {
+      prev.style.backgroundImage = `url("${v.replace(/"/g, '%22')}")`;
+      prev.textContent = '';
+    } else {
+      prev.style.backgroundImage = '';
+      prev.textContent = 'No image';
+    }
+  };
+  inp.addEventListener('input', update);
+  return update;
+}
+const updateMPreview     = bindPreview('#mImage',     '#mImgPreview');
+const updateHeroPreview  = bindPreview('#heroImage',  '#heroImgPreview');
+const updateAboutPreview = bindPreview('#aboutImage', '#aboutImgPreview');
+
+/* ---------- FLEET ---------- */
+let fleet = [];
+let editingIdx = -1;
+
+async function loadFleet() {
+  const { ok, j } = await api('/api/fleet');
+  fleet = ok && Array.isArray(j) ? j : [];
+  renderFleet();
+}
+
+function renderFleet() {
+  const list = $('#fleetList');
+  if (!fleet.length) {
+    list.innerHTML = '<div class="empty"><p>No vehicles yet</p><button class="btn btn-gold" id="firstCarBtn">+ Add your first vehicle</button></div>';
+    list.querySelector('#firstCarBtn').addEventListener('click', () => openCarModal(-1));
+    return;
+  }
+  const cur = $('#cCurrency')?.value || '€';
+  list.innerHTML = fleet.map((c, i) => `
+    <div class="car-row" data-i="${i}">
+      <div class="car-thumb" style="background-image:url('${escHtml(c.image || '').replace(/'/g, '%27')}')"></div>
+      <div class="car-row-info">
+        <div class="car-row-class">${escHtml(c.class || '')}</div>
+        <h3>${escHtml(c.name || 'Untitled vehicle')}</h3>
+        <div class="car-row-meta"><b>${escHtml(cur)}${escHtml(c.price || '—')}/day</b> · ${(c.specs || []).map(escHtml).join(' · ')}</div>
+      </div>
+      <div class="car-row-actions">
+        <button class="icon-btn" data-act="up"   title="Move up">↑</button>
+        <button class="icon-btn" data-act="down" title="Move down">↓</button>
+        <button class="btn btn-ghost btn-sm" data-act="edit">Edit</button>
+        <button class="icon-btn danger" data-act="del" title="Delete">✕</button>
+      </div>
+    </div>`).join('');
+
+  list.querySelectorAll('.car-row').forEach(row => {
+    const i = +row.dataset.i;
+    row.querySelector('[data-act=edit]').addEventListener('click', () => openCarModal(i));
+    row.querySelector('[data-act=del]').addEventListener('click', () => {
+      if (!confirm('Delete this vehicle?')) return;
+      fleet.splice(i, 1); renderFleet();
+    });
+    row.querySelector('[data-act=up]').addEventListener('click', () => {
+      if (i === 0) return; [fleet[i-1], fleet[i]] = [fleet[i], fleet[i-1]]; renderFleet();
+    });
+    row.querySelector('[data-act=down]').addEventListener('click', () => {
+      if (i === fleet.length - 1) return; [fleet[i+1], fleet[i]] = [fleet[i], fleet[i+1]]; renderFleet();
+    });
+  });
+}
+
+function openCarModal(i) {
+  editingIdx = i;
+  const c = i >= 0 ? fleet[i] : { name:'', class:'', specs:['','',''], price:'', image:'' };
+  $('#carModalTitle').textContent = i >= 0 ? 'Edit vehicle' : 'Add vehicle';
+  $('#mName').value  = c.name  || '';
+  $('#mClass').value = c.class || '';
+  $('#mSpec1').value = c.specs?.[0] || '';
+  $('#mSpec2').value = c.specs?.[1] || '';
+  $('#mSpec3').value = c.specs?.[2] || '';
+  $('#mPrice').value = c.price || '';
+  $('#mImage').value = c.image || '';
+  updateMPreview();
+  $('#carModal').classList.add('open');
+  setTimeout(() => $('#mName').focus(), 50);
+}
+
+function saveCarFromModal() {
+  const car = {
+    id: editingIdx >= 0 ? (fleet[editingIdx].id || cryptoId()) : cryptoId(),
+    name:  $('#mName').value.trim(),
+    class: $('#mClass').value.trim(),
+    specs: [$('#mSpec1').value, $('#mSpec2').value, $('#mSpec3').value].map(s => s.trim()).filter(Boolean),
+    price: $('#mPrice').value.trim(),
+    image: $('#mImage').value.trim(),
+  };
+  if (!car.name) { toast('Name is required', 'err'); return; }
+  if (editingIdx >= 0) fleet[editingIdx] = car; else fleet.push(car);
+  $('#carModal').classList.remove('open');
+  renderFleet();
+}
+
+async function saveFleet() {
+  const { ok, j } = await api('/api/fleet', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ fleet }),
+  });
+  if (ok) toast('Fleet saved · ' + j.count + ' vehicles');
+  else    toast(j.error || 'Save failed', 'err');
+}
+
+/* ---------- CONFIG ---------- */
+let config = {};
+async function loadConfig() {
+  const { ok, j } = await api('/api/config');
+  config = (ok && j && typeof j === 'object' && !Array.isArray(j)) ? j : {};
+
+  const c = config.contact || {};
+  $('#cWhatsapp').value = c.whatsapp || '';
+  $('#cPhone').value    = c.phone    || '';
+  $('#cEmail').value    = c.email    || '';
+  $('#cLocation').value = c.location || '';
+  $('#cAddress').value  = c.address  || '';
+  $('#cHours').value    = c.hours    || '';
+  $('#cCurrency').value = config.currency || '€';
+
+  const h = config.hero || {};
+  $('#heroEyebrow').value    = h.eyebrow    || '';
+  $('#heroTitleStart').value = h.titleStart || '';
+  $('#heroTitleEnd').value   = h.titleEnd   || '';
+  $('#heroSubtitle').value   = h.subtitle   || '';
+  $('#heroImage').value      = h.image      || '';
+  updateHeroPreview();
+
+  const a = config.about || {};
+  $('#aboutTitle').value = a.title      || '';
+  $('#aboutP1').value    = a.paragraph1 || '';
+  $('#aboutP2').value    = a.paragraph2 || '';
+  $('#aboutImage').value = a.image      || '';
+  updateAboutPreview();
+}
+
+async function saveConfigPatch(patch) {
+  const merged = { ...config, ...patch };
+  const { ok, j } = await api('/api/config', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ config: merged }),
+  });
+  if (ok) { config = merged; toast('Saved'); renderFleet(); }
+  else    toast(j.error || 'Save failed', 'err');
+}
+
+function saveContact() {
+  saveConfigPatch({
+    contact: {
+      whatsapp: $('#cWhatsapp').value.replace(/\D/g, ''),
+      phone:    $('#cPhone').value,
+      email:    $('#cEmail').value,
+      location: $('#cLocation').value,
+      address:  $('#cAddress').value,
+      hours:    $('#cHours').value,
+    },
+    currency: $('#cCurrency').value || '€',
+  });
+}
+
+function saveContent() {
+  saveConfigPatch({
+    hero: {
+      eyebrow:    $('#heroEyebrow').value,
+      titleStart: $('#heroTitleStart').value,
+      titleEnd:   $('#heroTitleEnd').value,
+      subtitle:   $('#heroSubtitle').value,
+      image:      $('#heroImage').value,
+    },
+    about: {
+      title:      $('#aboutTitle').value,
+      paragraph1: $('#aboutP1').value,
+      paragraph2: $('#aboutP2').value,
+      image:      $('#aboutImage').value,
+    },
+  });
+}
+
+async function changePassword() {
+  const { ok, j } = await api('/api/auth?action=change_password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ current: $('#pCurrent').value, new: $('#pNew').value }),
+  });
+  if (ok) {
+    $('#pCurrent').value = ''; $('#pNew').value = '';
+    $('#defaultPassAlert').hidden = true;
+    toast('Password updated');
+  } else {
+    toast(j.error || 'Could not update', 'err');
+  }
+}
+
+init();
+</script>
+</body>
+</html>
