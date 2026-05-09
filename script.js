@@ -14,9 +14,10 @@ const i18n = {
     "hero.eyebrow":"PORTUGAL · ESTABLISHED EXCELLENCE","hero.line1":"Drive the","hero.line2":"Extraordinary.",
     "hero.sub":"Mercedes-Benz · Audi · BMW · Porsche · Range Rover. Hand-delivered in Lisbon, Porto and the Algarve.",
     "hero.cta1":"Explore the Fleet","hero.cta2":"Speak to Concierge","hero.scroll":"SCROLL",
+    "stats.cars":"vehicles","stats.cities":"cities","stats.delivery":"delivery","stats.concierge":"concierge",
     "intro.eyebrow":"— THE GROVE STANDARD","intro.title":"A private collection, at your service.",
     "intro.body":"Grove Business curates a fleet of immaculately prepared luxury and performance vehicles for guests visiting Portugal. Every car is detailed before delivery, fully insured, and accompanied by a concierge who understands that arrival matters as much as the destination.",
-    "fleet.eyebrow":"— THE FLEET","fleet.title":"Curated for the discerning.","fleet.from":"from","fleet.inquire":"Inquire",
+    "fleet.eyebrow":"— THE FLEET","fleet.title":"Curated for the discerning.","fleet.from":"from","fleet.inquire":"Inquire","fleet.meta":"selected vehicles",
     "fleet.note":"Our complete collection includes more than 30 vehicles. Tell us your dates — we will source the right car.",
     "services.eyebrow":"— SERVICES","services.title":"Beyond the keys.",
     "services.s1.title":"Airport Delivery","services.s1.body":"Your vehicle, valeted and ready, the moment you land at LIS, OPO or FAO. No queues. No paperwork at the counter.",
@@ -38,9 +39,10 @@ const i18n = {
     "hero.eyebrow":"PORTUGAL · EXCELÊNCIA RECONHECIDA","hero.line1":"Conduza o","hero.line2":"Extraordinário.",
     "hero.sub":"Mercedes-Benz · Audi · BMW · Porsche · Range Rover. Entrega personalizada em Lisboa, Porto e Algarve.",
     "hero.cta1":"Ver Frota","hero.cta2":"Falar com Concierge","hero.scroll":"DESLIZAR",
+    "stats.cars":"viaturas","stats.cities":"cidades","stats.delivery":"entrega","stats.concierge":"concierge",
     "intro.eyebrow":"— O PADRÃO GROVE","intro.title":"Uma coleção privada, ao seu dispor.",
     "intro.body":"A Grove Business reúne uma frota de automóveis de luxo e alta performance, impecavelmente preparados para os hóspedes que visitam Portugal. Cada viatura é detalhada antes da entrega, totalmente segurada, e acompanhada por um concierge que sabe que a chegada importa tanto como o destino.",
-    "fleet.eyebrow":"— A FROTA","fleet.title":"Selecionada para os exigentes.","fleet.from":"desde","fleet.inquire":"Reservar",
+    "fleet.eyebrow":"— A FROTA","fleet.title":"Selecionada para os exigentes.","fleet.from":"desde","fleet.inquire":"Reservar","fleet.meta":"viaturas selecionadas",
     "fleet.note":"A nossa coleção completa inclui mais de 30 veículos. Indique-nos as suas datas — encontramos o automóvel certo.",
     "services.eyebrow":"— SERVIÇOS","services.title":"Para além das chaves.",
     "services.s1.title":"Entrega no Aeroporto","services.s1.body":"A sua viatura, lavada e pronta, no momento em que aterra em LIS, OPO ou FAO. Sem filas. Sem balcão.",
@@ -62,9 +64,10 @@ const i18n = {
     "hero.eyebrow":"PORTUGAL · GEVESTIGDE EXCELLENTIE","hero.line1":"Rijd het","hero.line2":"Uitzonderlijke.",
     "hero.sub":"Mercedes-Benz · Audi · BMW · Porsche · Range Rover. Persoonlijk afgeleverd in Lissabon, Porto en de Algarve.",
     "hero.cta1":"Bekijk de Vloot","hero.cta2":"Spreek met Concierge","hero.scroll":"SCROLL",
+    "stats.cars":"voertuigen","stats.cities":"steden","stats.delivery":"levering","stats.concierge":"concierge",
     "intro.eyebrow":"— DE GROVE STANDAARD","intro.title":"Een privécollectie, tot uw dienst.",
     "intro.body":"Grove Business stelt een vloot samen van smetteloos voorbereide luxe- en sportwagens voor gasten die Portugal bezoeken. Elke auto wordt voor levering gedetailleerd, volledig verzekerd, en begeleid door een concierge die begrijpt dat de aankomst even belangrijk is als de bestemming.",
-    "fleet.eyebrow":"— DE VLOOT","fleet.title":"Geselecteerd voor de kenner.","fleet.from":"vanaf","fleet.inquire":"Informeer",
+    "fleet.eyebrow":"— DE VLOOT","fleet.title":"Geselecteerd voor de kenner.","fleet.from":"vanaf","fleet.inquire":"Informeer","fleet.meta":"geselecteerde voertuigen",
     "fleet.note":"Onze volledige collectie omvat meer dan 30 voertuigen. Geef ons uw data — wij zoeken de juiste auto.",
     "services.eyebrow":"— SERVICES","services.title":"Meer dan de sleutel.",
     "services.s1.title":"Aflevering Luchthaven","services.s1.body":"Uw auto, gereinigd en klaar, op het moment dat u landt op LIS, OPO of FAO. Geen rijen. Geen papierwerk aan de balie.",
@@ -327,8 +330,7 @@ window.addEventListener('load', () => {
 (() => {
   let saved = null;
   try { saved = localStorage.getItem('gb-lang'); } catch (e) {}
-  const browser = (navigator.language || 'en').slice(0, 2);
-  applyLang(saved || (i18n[browser] ? browser : 'en'));
+  applyLang(saved || 'pt');
 })();
 
 $('#year').textContent = new Date().getFullYear();

@@ -968,3 +968,511 @@ a.contact-val:hover { color: var(--gold); }
   .car-race  { display: none; }
 }
 
+/* =====================================================================
+   EDITORIAL OVERHAUL  ·  v2 (asymmetric, magazine-cover typography)
+   ===================================================================== */
+
+:root {
+  --cream: #ede4cf;
+  --cream-soft: rgba(237, 228, 207, 0.78);
+}
+
+/* ---------- film grain (subtle, atmospheric) ---------- */
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.10;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 240px 240px;
+}
+
+/* ---------- editorial hero ---------- */
+
+.hero { align-items: stretch; }
+
+.hero-content {
+  padding: 160px var(--pad) 200px;
+  max-width: var(--container);
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 3;
+}
+
+.hero-eyebrow {
+  font-size: 10.5px;
+  letter-spacing: 0.42em;
+  position: relative;
+  padding-left: 64px;
+}
+.hero-eyebrow::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 50%;
+  width: 48px; height: 1px;
+  background: var(--gold);
+  opacity: 0.7;
+}
+
+/* Massive layered title — line 1 small italic, line 2 enormous */
+.hero-title {
+  margin: 32px 0 36px;
+  max-width: 100%;
+  letter-spacing: -0.03em;
+}
+.hero-line-1 {
+  display: block;
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(28px, 4.2vw, 56px);
+  line-height: 1;
+  color: var(--cream-soft);
+  margin-left: clamp(20px, 6vw, 80px);
+  letter-spacing: 0.01em;
+}
+.hero-line-2 {
+  display: block;
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(64px, 13vw, 200px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  margin-top: 4px;
+}
+
+.hero-sub {
+  max-width: 460px;
+  font-size: 14px;
+  line-height: 1.85;
+  letter-spacing: 0.02em;
+  color: rgba(233, 230, 223, 0.62);
+  margin-left: clamp(20px, 6vw, 80px);
+  margin-bottom: 44px;
+  font-weight: 300;
+}
+
+.hero-cta {
+  margin-left: clamp(20px, 6vw, 80px);
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  flex-wrap: wrap;
+}
+
+/* Editorial gold-underline text link */
+.btn-link {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  position: relative;
+  padding-bottom: 6px;
+  transition: letter-spacing .35s var(--ease), color .25s var(--ease);
+  text-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+}
+.btn-link::after {
+  content: "";
+  position: absolute; left: 0; bottom: 0;
+  width: 100%; height: 1px;
+  background: var(--gold);
+  transform-origin: left center;
+  transition: transform .4s var(--ease);
+}
+.btn-link:hover { letter-spacing: 0.36em; }
+.btn-link:hover::after { transform: scaleX(0.6); }
+
+/* Vertical side-mark */
+.hero-side {
+  position: absolute;
+  top: 50%;
+  right: clamp(14px, 2.4vw, 36px);
+  transform: translateY(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 10px;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--cream-soft);
+  z-index: 3;
+  font-weight: 400;
+}
+.hero-side .hero-side-dot {
+  color: var(--gold);
+  letter-spacing: 0;
+}
+
+/* Massive faint numeral watermark (top-right) */
+.hero-mark {
+  position: absolute;
+  top: 96px;
+  right: clamp(60px, 8vw, 120px);
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-size: clamp(80px, 14vw, 200px);
+  font-weight: 300;
+  line-height: 0.85;
+  color: rgba(212, 175, 55, 0.06);
+  z-index: 2;
+  user-select: none;
+  letter-spacing: -0.02em;
+}
+.hero-mark em {
+  font-style: italic;
+  font-weight: 500;
+  color: rgba(212, 175, 55, 0.10);
+}
+
+/* Hero foot strip — stats + scroll cue */
+.hero-foot {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px clamp(20px, 4vw, 56px);
+  border-top: 1px solid rgba(212, 175, 55, 0.18);
+  background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);
+  backdrop-filter: blur(6px);
+  z-index: 3;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.hero-stats {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(18px, 3.4vw, 48px);
+  flex-wrap: wrap;
+}
+.hero-stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.hero-stat em {
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--gold);
+  text-shadow: 0 0 14px rgba(212, 175, 55, 0.30);
+  letter-spacing: -0.01em;
+}
+.hero-stat span {
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--cream-soft);
+  font-weight: 400;
+}
+.hero-scroll-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 9.5px;
+  letter-spacing: 0.4em;
+  color: var(--text-mute);
+  text-transform: uppercase;
+}
+.hero-scroll-bar i {
+  display: block;
+  width: 64px; height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold) 60%, transparent);
+  position: relative;
+  overflow: hidden;
+}
+.hero-scroll-bar i::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -30%;
+  width: 30%; height: 100%;
+  background: var(--gold-light);
+  animation: scrollBar 2.4s var(--ease) infinite;
+}
+@keyframes scrollBar { to { left: 100%; } }
+
+/* Old centred .hero-scroll is now hidden in favour of the foot bar */
+.hero > .hero-scroll { display: none; }
+
+/* ---------- huge background section numerals ---------- */
+
+.bg-numeral {
+  position: absolute;
+  top: 60px;
+  right: clamp(20px, 4vw, 60px);
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(140px, 22vw, 360px);
+  line-height: 0.85;
+  color: rgba(212, 175, 55, 0.045);
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+  letter-spacing: -0.04em;
+}
+.section { position: relative; }
+.section > .container { position: relative; z-index: 1; }
+
+/* ---------- section header with right-side meta ---------- */
+
+.section-header-flex {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.section-meta {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.section-meta-num {
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(48px, 5.5vw, 84px);
+  line-height: 1;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.18);
+  letter-spacing: -0.02em;
+}
+.section-meta-label {
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+/* ---------- fleet cards: magazine-cover-style ---------- */
+
+.fleet-grid {
+  counter-reset: carNum;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 40px 32px;
+}
+
+.car-card {
+  counter-increment: carNum;
+  background: transparent;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+}
+.car-card::before { display: none; } /* drop the old hover overlay */
+.car-card:hover { background: transparent; transform: none; }
+
+.car-img {
+  position: relative;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  transition: border-color .5s var(--ease);
+}
+.car-card:hover .car-img {
+  transform: none;
+  border-color: var(--line-strong);
+}
+.car-img::before {
+  content: counter(carNum, decimal-leading-zero);
+  position: absolute;
+  top: 16px; left: 18px;
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 24px;
+  color: var(--cream);
+  z-index: 2;
+  text-shadow: 0 2px 14px rgba(0,0,0,0.55);
+  letter-spacing: 0.02em;
+}
+.car-img > div,
+.car-img {
+  /* ensure background image inherits when applied via inline style */
+}
+.car-img::after {
+  background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgba(10,10,10,0.85) 100%);
+}
+.car-img > .car-img-inner { /* unused but reserved */ }
+
+/* Inline-style .car-img already has background-image; we keep that. */
+.car-card .car-img {
+  background-size: cover;
+  background-position: center;
+  transition: transform .9s var(--ease);
+}
+.car-card:hover .car-img { transform: scale(1.025); }
+
+.car-body {
+  padding: 22px 0 0;
+  position: relative;
+}
+.car-class {
+  order: 2;
+  margin-bottom: 0;
+  margin-top: 10px;
+  font-size: 9.5px;
+  letter-spacing: 0.36em;
+  color: var(--gold);
+  opacity: 0.85;
+}
+.car-name {
+  order: 1;
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(28px, 2.8vw, 38px);
+  line-height: 1.05;
+  margin-bottom: 0;
+  letter-spacing: -0.01em;
+}
+.car-body { display: flex; flex-direction: column; }
+
+.car-specs {
+  order: 3;
+  margin: 18px 0 0;
+  padding: 16px 0 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 0;
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--text-mute);
+  gap: 14px;
+  letter-spacing: 0.02em;
+}
+.car-specs li::before { content: ""; }
+.car-specs li + li::before {
+  content: "·";
+  position: absolute;
+  left: -10px;
+  color: var(--gold);
+  opacity: 0.6;
+}
+.car-foot {
+  order: 4;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.car-price {
+  font-size: 20px;
+}
+.car-price i {
+  font-size: 9.5px;
+  letter-spacing: 0.32em;
+}
+.car-cta {
+  font-size: 10px;
+  letter-spacing: 0.32em;
+}
+
+/* ---------- section title tweaks ---------- */
+
+.section-title {
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  font-size: clamp(40px, 6.2vw, 92px);
+  line-height: 1;
+  max-width: 14ch;
+}
+.intro-text {
+  font-weight: 300;
+  letter-spacing: 0.005em;
+}
+
+/* Drop-cap for first about paragraph */
+.about-text p:first-of-type::first-letter {
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 4em;
+  float: left;
+  line-height: 0.85;
+  margin: 6px 12px 0 0;
+  color: var(--gold);
+  text-shadow: 0 0 18px rgba(212, 175, 55, 0.28);
+}
+
+/* ---------- services: alternating offsets ---------- */
+
+.services-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 0;
+  margin-top: 40px;
+}
+.service {
+  display: grid;
+  grid-template-columns: clamp(80px, 10vw, 140px) 1fr;
+  gap: clamp(20px, 4vw, 56px);
+  padding: 36px 0 36px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  align-items: start;
+  max-width: 880px;
+  width: 100%;
+  background: transparent !important;
+}
+.service:last-child { border-bottom: 1px solid var(--line); }
+.service:nth-child(2) { margin-left: auto; }
+.service:nth-child(3) { margin-left: clamp(40px, 8vw, 120px); }
+.service:nth-child(4) { margin-left: auto; }
+.service-num {
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(48px, 6vw, 96px);
+  line-height: 0.85;
+  color: var(--gold);
+  margin: 0;
+  text-shadow: 0 0 22px rgba(212, 175, 55, 0.20);
+  letter-spacing: -0.02em;
+}
+.service h3 {
+  font-size: clamp(26px, 2.6vw, 36px);
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+.service p {
+  max-width: 56ch;
+  line-height: 1.75;
+}
+
+/* ---------- footer refinement ---------- */
+
+.footer-inner { gap: 18px; }
+.footer-tag::before {
+  content: "EST. 2024 · ";
+  color: var(--gold);
+  letter-spacing: 0.32em;
+}
+
+/* ---------- responsive hero refinement ---------- */
+
+@media (max-width: 760px) {
+  .hero-side { display: none; }
+  .hero-mark { font-size: 110px; top: 80px; right: 16px; }
+  .hero-line-1, .hero-sub, .hero-cta { margin-left: 0; }
+  .hero-eyebrow { padding-left: 0; }
+  .hero-eyebrow::before { display: none; }
+  .hero-content { padding-bottom: 220px; }
+  .hero-foot { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px 22px; }
+  .hero-scroll-bar { align-self: flex-end; }
+  .bg-numeral { font-size: 30vw; }
+  .section-header-flex { flex-direction: column; align-items: flex-start; }
+  .section-meta { text-align: left; }
+}
+
+

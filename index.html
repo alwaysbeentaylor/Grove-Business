@@ -106,23 +106,45 @@
   <header class="hero" id="home">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-veil" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <!-- Vertical editorial marker -->
+    <div class="hero-side" aria-hidden="true">
+      <span>EST.</span>
+      <span class="hero-side-dot">·</span>
+      <span>PORTUGAL</span>
+      <span class="hero-side-dot">·</span>
+      <span>MMXXIV</span>
+    </div>
+
+    <!-- Massive watermark numeral -->
+    <div class="hero-mark" aria-hidden="true">N°<em>01</em></div>
 
     <div class="hero-content">
-      <span class="eyebrow" data-i18n="hero.eyebrow">PORTUGAL · ESTABLISHED EXCELLENCE</span>
+      <span class="eyebrow hero-eyebrow" data-i18n="hero.eyebrow">PORTUGAL · ESTABLISHED EXCELLENCE</span>
       <h1 class="hero-title">
-        <span data-i18n="hero.line1">Drive the</span>
-        <span class="gold-text" data-i18n="hero.line2">Extraordinary.</span>
+        <span class="hero-line-1" data-i18n="hero.line1">Drive the</span>
+        <span class="hero-line-2 gold-text" data-i18n="hero.line2">Extraordinary.</span>
       </h1>
       <p class="hero-sub" data-i18n="hero.sub">Mercedes-Benz · Audi · BMW · Porsche · Range Rover. Hand-delivered in Lisbon, Porto and the Algarve.</p>
       <div class="hero-cta">
         <a href="#fleet" class="btn btn-gold" data-i18n="hero.cta1">Explore the Fleet</a>
-        <a href="#contact" class="btn btn-ghost" data-i18n="hero.cta2">Speak to Concierge</a>
+        <a href="#contact" class="btn-link" data-i18n="hero.cta2">Speak to Concierge →</a>
       </div>
     </div>
 
-    <div class="hero-scroll">
-      <span data-i18n="hero.scroll">SCROLL</span>
-      <i></i>
+    <!-- Bottom strip: live stats + scroll cue -->
+    <div class="hero-foot">
+      <div class="hero-stats">
+        <div class="hero-stat"><em>30+</em><span data-i18n="stats.cars">vehicles</span></div>
+        <div class="hero-stat"><em>04</em><span data-i18n="stats.cities">cities</span></div>
+        <div class="hero-stat"><em>60′</em><span data-i18n="stats.delivery">delivery</span></div>
+        <div class="hero-stat"><em>24/7</em><span data-i18n="stats.concierge">concierge</span></div>
+      </div>
+      <div class="hero-scroll-bar">
+        <span data-i18n="hero.scroll">SCROLL</span>
+        <i></i>
+      </div>
     </div>
   </header>
 
@@ -161,10 +183,17 @@
 
   <!-- FLEET -->
   <section class="section section-fleet" id="fleet">
+    <span class="bg-numeral" aria-hidden="true">02</span>
     <div class="container">
-      <div class="section-header">
-        <span class="eyebrow" data-i18n="fleet.eyebrow">— THE FLEET</span>
-        <h2 class="section-title" data-i18n="fleet.title">Curated for the discerning.</h2>
+      <div class="section-header section-header-flex">
+        <div>
+          <span class="eyebrow" data-i18n="fleet.eyebrow">— THE FLEET</span>
+          <h2 class="section-title" data-i18n="fleet.title">Curated for the discerning.</h2>
+        </div>
+        <div class="section-meta">
+          <span class="section-meta-num">06</span>
+          <span class="section-meta-label" data-i18n="fleet.meta">selected vehicles</span>
+        </div>
       </div>
 
       <div class="fleet-grid">
@@ -279,6 +308,7 @@
 
   <!-- SERVICES -->
   <section class="section section-services" id="services">
+    <span class="bg-numeral" aria-hidden="true">03</span>
     <div class="container">
       <div class="section-header">
         <span class="eyebrow" data-i18n="services.eyebrow">— SERVICES</span>
@@ -312,6 +342,7 @@
 
   <!-- ABOUT / SPLIT -->
   <section class="section section-about" id="about">
+    <span class="bg-numeral" aria-hidden="true">04</span>
     <div class="container about-grid">
       <div class="about-img" data-reveal></div>
       <div class="about-text" data-reveal>
@@ -330,6 +361,7 @@
 
   <!-- CONTACT -->
   <section class="section section-contact" id="contact">
+    <span class="bg-numeral" aria-hidden="true">05</span>
     <div class="container contact-inner">
       <span class="eyebrow" data-i18n="contact.eyebrow">— RESERVATIONS</span>
       <h2 class="section-title" data-i18n="contact.title">Tell us where, and when.</h2>
