@@ -1,6 +1,7 @@
 import {
   json, readJsonBody, getSessionFromReq, setSessionCookie, clearSessionCookie,
   signSession, verifyPassword, hashPassword, getStoredHash, setStoredHash, requireAuth,
+  isBlobConfigured,
 } from './_lib.js';
 
 export default async function handler(req, res) {
@@ -8,8 +9,17 @@ export default async function handler(req, res) {
 
   if (action === 'me') {
     const session = getSessionFromReq(req);
-    const { isDefault } = await getStoredHash();
-    return json(res, { logged_in: !!session?.admin, using_default: isDefault });
+    const blobOk  = isBlobConfigured();
+    let isDefault = true;
+    if (blobOk) {
+      try { ({ isDefault } = await getStoredHash()); } catch (e) { /* fall through */ }
+    }
+    return json(res, {
+      logged_in:      !!session?.admin,
+      using_default:  isDefault,
+      blob_configured: blobOk,
+      secret_set:     !!process.env.SESSION_SECRET,
+    });
   }
 
   if (req.method !== 'POST') return json(res, { error: 'Method not allowed' }, 405);
@@ -18,7 +28,18 @@ export default async function handler(req, res) {
   if (action === 'login') {
     const password = body.password || '';
     if (!password) return json(res, { error: 'Password required' }, 400);
-    const { hash, isDefault } = await getStoredHash();
+    if (!isBlobConfigured()) {
+      return json(res, {
+        error: 'Vercel Blob storage is not connected. In your Vercel dashboard: Storage → Create → Blob → Connect to project, then redeploy.',
+      }, 503);
+    }
+    let hash, isDefault;
+    try {
+      ({ hash, isDefault } = await getStoredHash());
+    } catch (e) {
+      console.error('getStoredHash failed:', e);
+      return json(res, { error: 'Could not reach storage: ' + (e.message || 'unknown') }, 500);
+    }
     if (!verifyPassword(password, hash)) {
       await new Promise(r => setTimeout(r, 600));
       return json(res, { error: 'Invalid password' }, 401);

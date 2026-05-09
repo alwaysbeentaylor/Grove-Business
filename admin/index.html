@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex,nofollow" />
-<title>Grove Business — Admin</title>
+<title>Grove Business — Administração</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  [hidden]{display:none !important}
   :root{
     --bg:#0a0a0a;--bg-2:#141414;--bg-3:#1c1c1c;
     --line:rgba(212,175,55,.18);--line-strong:rgba(212,175,55,.45);
@@ -150,11 +151,11 @@
 <div class="login" id="loginView" hidden>
   <div class="login-box">
     <div class="login-mark">Grove</div>
-    <div class="login-sub">Admin · Sign in</div>
+    <div class="login-sub">Administração · Iniciar sessão</div>
     <form id="loginForm" onsubmit="event.preventDefault();return false;">
-      <div class="field"><input type="password" id="loginPass" placeholder="Password" autofocus required /></div>
-      <button class="btn btn-gold btn-block" type="button" id="loginSubmit">Enter</button>
-      <p class="hint" style="margin-top:18px;text-align:center">Default password: <code>grove2026</code> — change it after first login.</p>
+      <div class="field"><input type="password" id="loginPass" placeholder="Palavra-passe" autofocus required /></div>
+      <button class="btn btn-gold btn-block" type="button" id="loginSubmit">Entrar</button>
+      <p class="hint" style="margin-top:18px;text-align:center">Palavra-passe predefinida: <code>grove2026</code> — altere após o primeiro acesso.</p>
     </form>
   </div>
 </div>
@@ -165,177 +166,177 @@
     <div class="brand">
       <img src="../logo.png" alt="" onerror="this.style.display='none'" />
       <span class="brand-text">GROVE <em>BUSINESS</em></span>
-      <span class="badge">Admin</span>
+      <span class="badge">Administração</span>
     </div>
     <div class="top-actions">
-      <a class="top-link" href="../" target="_blank">View Site ↗</a>
-      <button class="top-link" id="logoutBtn">Sign out</button>
+      <a class="top-link" href="../" target="_blank">Ver Site ↗</a>
+      <button class="top-link" id="logoutBtn">Sair</button>
     </div>
   </header>
 
   <nav class="tabs">
-    <button class="tab active" data-tab="fleet">Fleet</button>
-    <button class="tab" data-tab="hero">Hero &amp; About</button>
-    <button class="tab" data-tab="contact">Contact</button>
-    <button class="tab" data-tab="account">Account</button>
+    <button class="tab active" data-tab="fleet">Frota</button>
+    <button class="tab" data-tab="hero">Capa &amp; Sobre</button>
+    <button class="tab" data-tab="contact">Contacto</button>
+    <button class="tab" data-tab="account">Conta</button>
   </nav>
 
   <!-- FLEET PANE -->
   <section class="panel" data-pane="fleet">
     <div class="panel-head">
       <div>
-        <div class="panel-title">Your Fleet</div>
-        <div class="panel-sub">Add, edit and re-order the cars shown on the public site.</div>
+        <div class="panel-title">A Sua Frota</div>
+        <div class="panel-sub">Adicione, edite e reordene os carros mostrados no site público.</div>
       </div>
-      <button class="btn btn-gold" id="addCarBtn">+ Add vehicle</button>
+      <button class="btn btn-gold" id="addCarBtn">+ Adicionar viatura</button>
     </div>
     <div class="fleet-list" id="fleetList"></div>
     <div style="display:flex;justify-content:flex-end;gap:10px">
-      <button class="btn btn-ghost" id="resetFleetBtn">Reload</button>
-      <button class="btn btn-gold" id="saveFleetBtn">Save fleet</button>
+      <button class="btn btn-ghost" id="resetFleetBtn">Recarregar</button>
+      <button class="btn btn-gold" id="saveFleetBtn">Guardar frota</button>
     </div>
   </section>
 
-  <!-- HERO &amp; ABOUT PANE -->
+  <!-- CAPA & SOBRE PANE -->
   <section class="panel" data-pane="hero" hidden>
     <div class="panel-head">
       <div>
-        <div class="panel-title">Hero &amp; About</div>
-        <div class="panel-sub">Override the headline copy and key images on the homepage. Leave a field empty to keep the default.</div>
+        <div class="panel-title">Capa &amp; Sobre</div>
+        <div class="panel-sub">Substituir o texto e as imagens principais da página inicial. Deixe um campo vazio para manter o padrão.</div>
       </div>
     </div>
 
-    <h3 class="section-h">Hero section</h3>
-    <div class="field"><label>Eyebrow</label><input type="text" id="heroEyebrow" placeholder="PORTUGAL · ESTABLISHED EXCELLENCE" /></div>
+    <h3 class="section-h">Secção Capa</h3>
+    <div class="field"><label>Texto superior</label><input type="text" id="heroEyebrow" placeholder="PORTUGAL · ESTABLISHED EXCELLENCE" /></div>
     <div class="field-row">
-      <div class="field"><label>Title — line 1</label><input type="text" id="heroTitleStart" placeholder="Drive the" /></div>
-      <div class="field"><label>Title — line 2 (gold italic)</label><input type="text" id="heroTitleEnd" placeholder="Extraordinary." /></div>
+      <div class="field"><label>Título — linha 1</label><input type="text" id="heroTitleStart" placeholder="Conduza o" /></div>
+      <div class="field"><label>Título — linha 2 (itálico dourado)</label><input type="text" id="heroTitleEnd" placeholder="Extraordinário." /></div>
     </div>
-    <div class="field"><label>Subtitle</label><textarea id="heroSubtitle" placeholder="Mercedes-Benz · Audi · BMW ..."></textarea></div>
+    <div class="field"><label>Subtítulo</label><textarea id="heroSubtitle" placeholder="Mercedes-Benz · Audi · BMW ..."></textarea></div>
     <div class="field">
-      <label>Background image</label>
+      <label>Imagem de fundo</label>
       <div class="img-picker">
-        <div class="img-preview" id="heroImgPreview">No image</div>
+        <div class="img-preview" id="heroImgPreview">Sem imagem</div>
         <div class="img-controls">
           <label class="upload-area" data-target="heroImage">
             <input type="file" accept="image/*" />
-            Drop file or click to upload
+            Arraste ou clique para carregar
           </label>
-          <input type="text" id="heroImage" placeholder="…or paste image URL" />
+          <input type="text" id="heroImage" placeholder="…ou cole o URL da imagem" />
         </div>
       </div>
     </div>
 
     <hr />
 
-    <h3 class="section-h">About section</h3>
-    <div class="field"><label>Title</label><input type="text" id="aboutTitle" placeholder="Built on trust. Delivered with discretion." /></div>
-    <div class="field"><label>Paragraph 1</label><textarea id="aboutP1"></textarea></div>
-    <div class="field"><label>Paragraph 2</label><textarea id="aboutP2"></textarea></div>
+    <h3 class="section-h">Secção Sobre</h3>
+    <div class="field"><label>Título</label><input type="text" id="aboutTitle" placeholder="Construído em confiança. Entregue com discrição." /></div>
+    <div class="field"><label>Parágrafo 1</label><textarea id="aboutP1"></textarea></div>
+    <div class="field"><label>Parágrafo 2</label><textarea id="aboutP2"></textarea></div>
     <div class="field">
-      <label>About image</label>
+      <label>Imagem da secção Sobre</label>
       <div class="img-picker">
-        <div class="img-preview" id="aboutImgPreview">No image</div>
+        <div class="img-preview" id="aboutImgPreview">Sem imagem</div>
         <div class="img-controls">
           <label class="upload-area" data-target="aboutImage">
             <input type="file" accept="image/*" />
-            Drop file or click to upload
+            Arraste ou clique para carregar
           </label>
-          <input type="text" id="aboutImage" placeholder="…or paste image URL" />
+          <input type="text" id="aboutImage" placeholder="…ou cole o URL da imagem" />
         </div>
       </div>
     </div>
 
     <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:28px">
-      <button class="btn btn-gold" id="saveContentBtn">Save content</button>
+      <button class="btn btn-gold" id="saveContentBtn">Guardar conteúdo</button>
     </div>
   </section>
 
-  <!-- CONTACT PANE -->
+  <!-- CONTACTO PANE -->
   <section class="panel" data-pane="contact" hidden>
     <div class="panel-head">
       <div>
-        <div class="panel-title">Contact</div>
-        <div class="panel-sub">All numbers, addresses and the WhatsApp button on the public site read from here.</div>
+        <div class="panel-title">Contacto</div>
+        <div class="panel-sub">Todos os números, moradas e o botão WhatsApp do site público são geridos a partir daqui.</div>
       </div>
     </div>
 
     <div class="field">
-      <label>WhatsApp number</label>
+      <label>Número WhatsApp</label>
       <input type="text" id="cWhatsapp" placeholder="351912345678" />
-      <div class="hint">Country code + number. No spaces, no “+”. Example for Portugal: <code>351912345678</code></div>
+      <div class="hint">Indicativo do país + número. Sem espaços, sem “+”. Exemplo Portugal: <code>351912345678</code></div>
     </div>
     <div class="field-row">
-      <div class="field"><label>Display phone</label><input type="text" id="cPhone" placeholder="+351 912 345 678" /></div>
-      <div class="field"><label>Email</label><input type="email" id="cEmail" placeholder="hello@grovebusiness.pt" /></div>
+      <div class="field"><label>Telefone (formato visível)</label><input type="text" id="cPhone" placeholder="+351 912 345 678" /></div>
+      <div class="field"><label>Email</label><input type="email" id="cEmail" placeholder="ola@grovebusiness.pt" /></div>
     </div>
-    <div class="field"><label>Service area / cities</label><input type="text" id="cLocation" placeholder="Lisbon · Porto · Algarve" /></div>
-    <div class="field"><label>Full address (shown in footer)</label><input type="text" id="cAddress" placeholder="Av. da Liberdade 100, 1250-145 Lisboa" /></div>
+    <div class="field"><label>Zona de serviço / cidades</label><input type="text" id="cLocation" placeholder="Lisboa · Porto · Algarve" /></div>
+    <div class="field"><label>Morada completa (visível no rodapé)</label><input type="text" id="cAddress" placeholder="Av. da Liberdade 100, 1250-145 Lisboa" /></div>
     <div class="field-row">
-      <div class="field"><label>Hours</label><input type="text" id="cHours" placeholder="24 / 7 · By appointment" /></div>
-      <div class="field"><label>Currency symbol</label><input type="text" id="cCurrency" placeholder="€" maxlength="3" /></div>
+      <div class="field"><label>Horário</label><input type="text" id="cHours" placeholder="24 / 7 · Com marcação" /></div>
+      <div class="field"><label>Símbolo da moeda</label><input type="text" id="cCurrency" placeholder="€" maxlength="3" /></div>
     </div>
 
     <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:28px">
-      <button class="btn btn-gold" id="saveContactBtn">Save contact</button>
+      <button class="btn btn-gold" id="saveContactBtn">Guardar contacto</button>
     </div>
   </section>
 
-  <!-- ACCOUNT PANE -->
+  <!-- CONTA PANE -->
   <section class="panel" data-pane="account" hidden>
     <div class="panel-head">
       <div>
-        <div class="panel-title">Account</div>
-        <div class="panel-sub">Change the password used to enter this admin panel.</div>
+        <div class="panel-title">Conta</div>
+        <div class="panel-sub">Alterar a palavra-passe usada para entrar nesta área de administração.</div>
       </div>
     </div>
 
     <div id="defaultPassAlert" class="alert" hidden>
-      <b>Heads up —</b> you are still using the default password <code>grove2026</code>. Please change it now.
+      <b>Atenção —</b> ainda está a usar a palavra-passe predefinida <code>grove2026</code>. Altere-a agora.
     </div>
 
     <div class="field-row">
-      <div class="field"><label>Current password</label><input type="password" id="pCurrent" autocomplete="current-password" /></div>
-      <div class="field"><label>New password</label><input type="password" id="pNew" autocomplete="new-password" /></div>
+      <div class="field"><label>Palavra-passe atual</label><input type="password" id="pCurrent" autocomplete="current-password" /></div>
+      <div class="field"><label>Nova palavra-passe</label><input type="password" id="pNew" autocomplete="new-password" /></div>
     </div>
 
     <div style="display:flex;justify-content:flex-end;gap:10px">
-      <button class="btn btn-gold" id="changePassBtn">Update password</button>
+      <button class="btn btn-gold" id="changePassBtn">Atualizar palavra-passe</button>
     </div>
   </section>
 
-  <!-- CAR EDIT MODAL -->
+  <!-- MODAL DE EDIÇÃO -->
   <div class="modal-bg" id="carModal">
     <div class="modal">
-      <h2 id="carModalTitle">Edit vehicle</h2>
-      <div class="field"><label>Name</label><input type="text" id="mName" placeholder="Mercedes-AMG G 63" /></div>
-      <div class="field"><label>Class / category</label><input type="text" id="mClass" placeholder="SUV · OFF-ROAD ICON" /></div>
+      <h2 id="carModalTitle">Editar viatura</h2>
+      <div class="field"><label>Nome</label><input type="text" id="mName" placeholder="Mercedes-AMG G 63" /></div>
+      <div class="field"><label>Classe / categoria</label><input type="text" id="mClass" placeholder="SUV · ÍCONE OFF-ROAD" /></div>
       <div class="field-row-3">
-        <div class="field"><label>Spec 1</label><input type="text" id="mSpec1" placeholder="4.0L V8" /></div>
-        <div class="field"><label>Spec 2</label><input type="text" id="mSpec2" placeholder="585 HP" /></div>
-        <div class="field"><label>Spec 3</label><input type="text" id="mSpec3" placeholder="Auto · 4 Seats" /></div>
+        <div class="field"><label>Especificação 1</label><input type="text" id="mSpec1" placeholder="4.0L V8" /></div>
+        <div class="field"><label>Especificação 2</label><input type="text" id="mSpec2" placeholder="585 CV" /></div>
+        <div class="field"><label>Especificação 3</label><input type="text" id="mSpec3" placeholder="Auto · 4 Lugares" /></div>
       </div>
       <div class="field" style="max-width:240px">
-        <label>Price per day</label>
+        <label>Preço por dia</label>
         <input type="text" id="mPrice" placeholder="650" />
-        <div class="hint">Number only. The currency symbol is set in Contact.</div>
+        <div class="hint">Apenas números. O símbolo da moeda define-se em Contacto.</div>
       </div>
       <div class="field">
-        <label>Photo</label>
+        <label>Foto</label>
         <div class="img-picker">
-          <div class="img-preview" id="mImgPreview">No image</div>
+          <div class="img-preview" id="mImgPreview">Sem imagem</div>
           <div class="img-controls">
             <label class="upload-area" data-target="mImage">
               <input type="file" accept="image/*" />
-              Drop a photo here or click to upload
+              Arraste uma foto aqui ou clique para carregar
             </label>
-            <input type="text" id="mImage" placeholder="…or paste image URL" />
+            <input type="text" id="mImage" placeholder="…ou cole o URL da imagem" />
           </div>
         </div>
       </div>
       <div class="modal-foot">
-        <button class="btn btn-ghost" id="mCancel">Cancel</button>
-        <button class="btn btn-gold" id="mSave">Save vehicle</button>
+        <button class="btn btn-ghost" id="mCancel">Cancelar</button>
+        <button class="btn btn-gold" id="mSave">Guardar viatura</button>
       </div>
     </div>
   </div>
@@ -402,10 +403,10 @@ function setupLogin() {
         body: JSON.stringify({ password: $('#loginPass').value }),
       });
       if (ok) location.reload();
-      else toast(j.error || 'Login failed', 'err');
+      else toast(j.error || 'Falha no acesso', 'err');
     } catch (e) {
       console.error(e);
-      toast('Network error', 'err');
+      toast('Erro de rede', 'err');
     } finally {
       btn.disabled = false;
     }
@@ -441,7 +442,7 @@ function setupApp() {
 /* ---------- UPLOAD ---------- */
 async function uploadFile(file) {
   if (!file) return null;
-  if (file.size > 8 * 1024 * 1024) { toast('File too large (max 8 MB)', 'err'); return null; }
+  if (file.size > 8 * 1024 * 1024) { toast('Ficheiro demasiado grande (máx. 8 MB)', 'err'); return null; }
   try {
     const upload = await getUploadFn();
     const blob = await upload(file.name, file, {
@@ -450,7 +451,7 @@ async function uploadFile(file) {
     });
     return blob.url;
   } catch (e) {
-    toast(e.message || 'Upload failed', 'err');
+    toast(e.message || 'Falha no carregamento', 'err');
     return null;
   }
 }
@@ -460,14 +461,14 @@ function bindUploader(label) {
   const orig = label.innerHTML;
   const handleFile = async (file) => {
     if (!file) return;
-    label.textContent = 'Uploading…';
+    label.textContent = 'A carregar…';
     const url = await uploadFile(file);
     label.innerHTML = orig;
     label.querySelector('input').addEventListener('change', e => handleFile(e.target.files[0]));
     if (url) {
       target.value = url;
       target.dispatchEvent(new Event('input'));
-      toast('Uploaded');
+      toast('Carregado');
     }
   };
   label.querySelector('input').addEventListener('change', e => handleFile(e.target.files[0]));
@@ -488,7 +489,7 @@ function bindPreview(inputSel, previewSel) {
       prev.textContent = '';
     } else {
       prev.style.backgroundImage = '';
-      prev.textContent = 'No image';
+      prev.textContent = 'Sem imagem';
     }
   };
   inp.addEventListener('input', update);
@@ -511,7 +512,7 @@ async function loadFleet() {
 function renderFleet() {
   const list = $('#fleetList');
   if (!fleet.length) {
-    list.innerHTML = '<div class="empty"><p>No vehicles yet</p><button class="btn btn-gold" id="firstCarBtn">+ Add your first vehicle</button></div>';
+    list.innerHTML = '<div class="empty"><p>Ainda sem viaturas</p><button class="btn btn-gold" id="firstCarBtn">+ Adicionar primeira viatura</button></div>';
     list.querySelector('#firstCarBtn').addEventListener('click', () => openCarModal(-1));
     return;
   }
@@ -521,14 +522,14 @@ function renderFleet() {
       <div class="car-thumb" style="background-image:url('${escHtml(c.image || '').replace(/'/g, '%27')}')"></div>
       <div class="car-row-info">
         <div class="car-row-class">${escHtml(c.class || '')}</div>
-        <h3>${escHtml(c.name || 'Untitled vehicle')}</h3>
-        <div class="car-row-meta"><b>${escHtml(cur)}${escHtml(c.price || '—')}/day</b> · ${(c.specs || []).map(escHtml).join(' · ')}</div>
+        <h3>${escHtml(c.name || 'Viatura sem nome')}</h3>
+        <div class="car-row-meta"><b>${escHtml(cur)}${escHtml(c.price || '—')}/dia</b> · ${(c.specs || []).map(escHtml).join(' · ')}</div>
       </div>
       <div class="car-row-actions">
-        <button class="icon-btn" data-act="up"   title="Move up">↑</button>
-        <button class="icon-btn" data-act="down" title="Move down">↓</button>
-        <button class="btn btn-ghost btn-sm" data-act="edit">Edit</button>
-        <button class="icon-btn danger" data-act="del" title="Delete">✕</button>
+        <button class="icon-btn" data-act="up"   title="Subir">↑</button>
+        <button class="icon-btn" data-act="down" title="Descer">↓</button>
+        <button class="btn btn-ghost btn-sm" data-act="edit">Editar</button>
+        <button class="icon-btn danger" data-act="del" title="Eliminar">✕</button>
       </div>
     </div>`).join('');
 
@@ -536,7 +537,7 @@ function renderFleet() {
     const i = +row.dataset.i;
     row.querySelector('[data-act=edit]').addEventListener('click', () => openCarModal(i));
     row.querySelector('[data-act=del]').addEventListener('click', () => {
-      if (!confirm('Delete this vehicle?')) return;
+      if (!confirm('Eliminar esta viatura?')) return;
       fleet.splice(i, 1); renderFleet();
     });
     row.querySelector('[data-act=up]').addEventListener('click', () => {
@@ -551,7 +552,7 @@ function renderFleet() {
 function openCarModal(i) {
   editingIdx = i;
   const c = i >= 0 ? fleet[i] : { name:'', class:'', specs:['','',''], price:'', image:'' };
-  $('#carModalTitle').textContent = i >= 0 ? 'Edit vehicle' : 'Add vehicle';
+  $('#carModalTitle').textContent = i >= 0 ? 'Editar viatura' : 'Adicionar viatura';
   $('#mName').value  = c.name  || '';
   $('#mClass').value = c.class || '';
   $('#mSpec1').value = c.specs?.[0] || '';
@@ -573,7 +574,7 @@ function saveCarFromModal() {
     price: $('#mPrice').value.trim(),
     image: $('#mImage').value.trim(),
   };
-  if (!car.name) { toast('Name is required', 'err'); return; }
+  if (!car.name) { toast('O nome é obrigatório', 'err'); return; }
   if (editingIdx >= 0) fleet[editingIdx] = car; else fleet.push(car);
   $('#carModal').classList.remove('open');
   renderFleet();
@@ -585,8 +586,8 @@ async function saveFleet() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ fleet }),
   });
-  if (ok) toast('Fleet saved · ' + j.count + ' vehicles');
-  else    toast(j.error || 'Save failed', 'err');
+  if (ok) toast('Frota guardada · ' + j.count + ' viaturas');
+  else    toast(j.error || 'Falha ao guardar', 'err');
 }
 
 /* ---------- CONFIG ---------- */
@@ -627,8 +628,8 @@ async function saveConfigPatch(patch) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ config: merged }),
   });
-  if (ok) { config = merged; toast('Saved'); renderFleet(); }
-  else    toast(j.error || 'Save failed', 'err');
+  if (ok) { config = merged; toast('Guardado'); renderFleet(); }
+  else    toast(j.error || 'Falha ao guardar', 'err');
 }
 
 function saveContact() {
@@ -672,9 +673,9 @@ async function changePassword() {
   if (ok) {
     $('#pCurrent').value = ''; $('#pNew').value = '';
     $('#defaultPassAlert').hidden = true;
-    toast('Password updated');
+    toast('Palavra-passe atualizada');
   } else {
-    toast(j.error || 'Could not update', 'err');
+    toast(j.error || 'Não foi possível atualizar', 'err');
   }
 }
 

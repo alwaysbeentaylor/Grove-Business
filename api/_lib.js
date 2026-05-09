@@ -121,17 +121,24 @@ export function signSession(payload) {
 
 export function verifySession(token) {
   if (!token) return null;
-  const [data, sig] = token.split('.');
-  if (!data || !sig) return null;
-  const expected = crypto.createHmac('sha256', SECRET).update(data).digest('base64url');
-  if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) return null;
   try {
+    const [data, sig] = token.split('.');
+    if (!data || !sig) return null;
+    const expected = crypto.createHmac('sha256', SECRET).update(data).digest('base64url');
+    const sigBuf = Buffer.from(sig);
+    const expectedBuf = Buffer.from(expected);
+    if (sigBuf.length !== expectedBuf.length) return null;
+    if (!crypto.timingSafeEqual(sigBuf, expectedBuf)) return null;
     const payload = JSON.parse(Buffer.from(data, 'base64url').toString());
     if (payload.exp < Date.now()) return null;
     return payload;
   } catch {
     return null;
   }
+}
+
+export function isBlobConfigured() {
+  return !!process.env.BLOB_READ_WRITE_TOKEN;
 }
 
 /* ---------- COOKIE / REQUEST UTILS ---------- */
