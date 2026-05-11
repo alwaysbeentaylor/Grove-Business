@@ -1491,7 +1491,7 @@ a.contact-val:hover { color: var(--gold); }
 
 .footer-inner { gap: 18px; }
 .footer-tag::before {
-  content: "EST. 2024 · ";
+  content: "EST. 2023 · ";
   color: var(--gold);
   letter-spacing: 0.32em;
 }
