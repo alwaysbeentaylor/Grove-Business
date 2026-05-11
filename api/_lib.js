@@ -51,13 +51,30 @@ export async function readJson(name, fallback) {
 }
 
 export async function writeJson(name, data) {
-  await put(blobUrl(name), JSON.stringify(data, null, 2), {
-    access: 'public',
-    contentType: 'application/json',
-    addRandomSuffix: false,
-    allowOverwrite: true,
-    cacheControlMaxAge: 0,
-  });
+  const path = blobUrl(name);
+  /* Belt-and-braces: remove any existing blob(s) under this path
+     so the new put() never collides — works regardless of the
+     @vercel/blob client version or store access mode. */
+  try {
+    const { blobs } = await list({ prefix: path });
+    for (const b of blobs) {
+      try { await del(b.url); }
+      catch (e) { console.error('blob del failed', b.url, e?.message); }
+    }
+  } catch (e) {
+    console.error('blob list failed', e?.message);
+  }
+  try {
+    await put(path, JSON.stringify(data, null, 2), {
+      access: 'public',
+      contentType: 'application/json',
+      addRandomSuffix: false,
+      cacheControlMaxAge: 0,
+    });
+  } catch (e) {
+    console.error('writeJson put failed', name, e?.message);
+    throw new Error(e?.message || 'Blob write rejected');
+  }
 }
 
 /* ---------- IMAGE UPLOADS ---------- */
