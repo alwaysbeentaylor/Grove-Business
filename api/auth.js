@@ -22,15 +22,15 @@ export default async function handler(req, res) {
     });
   }
 
-  if (req.method !== 'POST') return json(res, { error: 'Method not allowed' }, 405);
+  if (req.method !== 'POST') return json(res, { error: 'Método não permitido' }, 405);
   const body = await readJsonBody(req);
 
   if (action === 'login') {
     const password = body.password || '';
-    if (!password) return json(res, { error: 'Password required' }, 400);
+    if (!password) return json(res, { error: 'Palavra-passe obrigatória' }, 400);
     if (!isBlobConfigured()) {
       return json(res, {
-        error: 'Vercel Blob storage is not connected. In your Vercel dashboard: Storage → Create → Blob → Connect to project, then redeploy.',
+        error: 'Armazenamento Vercel Blob não está ligado. No painel Vercel: Storage → Create → Blob → Connect to project, depois faça redeploy.',
       }, 503);
     }
     let hash, isDefault;
@@ -38,11 +38,11 @@ export default async function handler(req, res) {
       ({ hash, isDefault } = await getStoredHash());
     } catch (e) {
       console.error('getStoredHash failed:', e);
-      return json(res, { error: 'Could not reach storage: ' + (e.message || 'unknown') }, 500);
+      return json(res, { error: 'Não foi possível aceder ao armazenamento: ' + (e.message || 'erro desconhecido') }, 500);
     }
     if (!verifyPassword(password, hash)) {
       await new Promise(r => setTimeout(r, 600));
-      return json(res, { error: 'Invalid password' }, 401);
+      return json(res, { error: 'Palavra-passe inválida' }, 401);
     }
     setSessionCookie(res, signSession({ admin: true }));
     return json(res, { ok: true, using_default: isDefault });
@@ -55,13 +55,29 @@ export default async function handler(req, res) {
 
   if (action === 'change_password') {
     if (!requireAuth(req, res)) return;
-    const { current = '', next = '' } = { current: body.current, next: body.new };
-    if (next.length < 6) return json(res, { error: 'New password must be at least 6 characters' }, 400);
-    const { hash } = await getStoredHash();
-    if (!verifyPassword(current, hash)) return json(res, { error: 'Current password is wrong' }, 401);
-    await setStoredHash(hashPassword(next));
+    const current = body.current || '';
+    const next    = body.new     || '';
+    if (next.length < 6) {
+      return json(res, { error: 'A nova palavra-passe tem de ter pelo menos 6 caracteres' }, 400);
+    }
+    let hash;
+    try {
+      ({ hash } = await getStoredHash());
+    } catch (e) {
+      console.error('getStoredHash failed:', e);
+      return json(res, { error: 'Não foi possível aceder ao armazenamento: ' + (e.message || 'erro desconhecido') }, 500);
+    }
+    if (!verifyPassword(current, hash)) {
+      return json(res, { error: 'Palavra-passe atual incorreta' }, 401);
+    }
+    try {
+      await setStoredHash(hashPassword(next));
+    } catch (e) {
+      console.error('setStoredHash failed:', e);
+      return json(res, { error: 'Não foi possível guardar a nova palavra-passe: ' + (e.message || 'erro desconhecido') }, 500);
+    }
     return json(res, { ok: true });
   }
 
-  return json(res, { error: 'Unknown action' }, 400);
+  return json(res, { error: 'Ação desconhecida' }, 400);
 }
